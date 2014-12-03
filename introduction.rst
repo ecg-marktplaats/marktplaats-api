@@ -1,0 +1,21 @@
+.. index:: Introduction
+
+.. _introduction:
+
+Overview
+=========
+
+Welcom to the Marktplaats API documentation. The Marktplaats API is the official
+API for Marktplaats. Most of the functionality exposed by the API can be done using
+the website, but the API also provides access to features which are not exposed
+on the website.
+
+The documentation consists of user guides on how to accomplish certain tasks using
+the API. There is also reference documentation available at https://api.marktplaats.nl/docs/v1.
+
+Almost all the API calls on the Marktplaats API have to be :ref:`Authenticated <authentication>`.
+
+.. IMPORTANT::
+  In order to authenticate, you need to register your application at Marktplaats. At the moment,
+  there is no automated procedure for that. In order to register your application, please contact
+  Marktplaats.
