@@ -29,7 +29,7 @@ In order to get the *access_token*, the first step is to do a call to the Marktp
 Authorization server::
 
 .. code-block:: http
-  GET /accounts/oauth/authorize?response_type=code&client_id=myclientid&state=randomstate&redirect_uri=http://localhost:3210/processredirect.php
+  GET /accounts/oauth/authorize?response_type=code&client_id=myclientid&state=randomstate&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php
   Host: auth.marktplaats.nl
 
 In the PHP example we POST a HTML form to the ``authenticate.php`` with ``clientId``,
@@ -71,3 +71,103 @@ to the provided *redirect_uri*, which is in our case ``http://localhost:3210/pro
 
 This starts the PHP session, and stores the provided ``code`` in the variable
 ``$authcode`` as well as the ``state`` parameter.
+
+.. code-block:: PHP
+  $clientId = $_SESSION['clientId'];
+  $clientSecret = $_SESSION['clientSecret'];
+  $accessTokenUrl = $_SESSION['accessTokenUrl'];
+  $redirectUri = $_SESSION['redirectUri'];
+
+
+  $params = "grant_type=authorization_code&code=$authcode&redirect_uri=$redirectUri&client_id=$clientId&client_secret=$clientSecret";
+
+  $opts = array('http' =>
+  array(
+  'method'  => 'POST',
+  'header'  => "Content-Type: application/json",
+  'timeout' => 60
+  )
+  );
+
+  //echo $params;
+
+  $context = stream_context_create($opts);
+  $result = file_get_contents($accessTokenUrl . "?$params", false, $context, -1, 40000);
+  $jsonresult = json_decode($result);
+  $_SESSION['access_token'] = $jsonresult->access_token;
+  $_SESSION['refresh_token'] = $jsonresult->refresh_token;
+
+  header("Location: index.php");
+
+With the received *authorization_code* in the ``code`` parameter, and the data
+which we stored in the session (which is the *client_id*, *client_secret*,
+*access token url* and *redirect_uri*) we can construct the request to obtain an
+*access_token*. For this, we construct the parameters for the request and do a
+POST request to the *access token url*.
+
+The POST request sent to the server looks like this:
+
+.. code-block:: HTTP
+  POST /accounts/oauth/token?grant_type=authorization_code&code=akAS72shjuqeah382&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&cliend_id=myclientid&client_secret=myclientsecret
+  Host: auth.marktplaats.nl
+
+The result of this POST request should be
+a *200 OK*, and a JSON object in the body which looks like this:
+
+.. code-block:: JSON
+    {
+      "access_token":"d79b4761-2268-4f03-a068-01eb26b3c7d2",
+      "token_type":"Bearer",
+      "expires_in":43199,
+      "refresh_token":"d5bd2dcf-1219-4b65-aacc-86149ba55fb0",
+      "scope":"read,write"
+    }
+
+You need to store the returned *access_token* and *refresh_token*, so you can reuse
+it late for authentication and refreshing the *access_token* in case it is expired.
+
+Step 3: Refreshing the *access_token*
+-------------------------------------
+
+When we receive the *access_token* we also receive a *refresh_token*. This can be
+used to obtain a new *access_token*, which is required since the token will expire
+after 24 hours. The *refresh_token* will not expire and as such is crucial in the
+process of giving your users an unutrusive experience.
+
+To get a new access token you need to do a HTTP POST request to the token endpoint.
+This is very similar to obtaining the access token:
+
+.. code-block:: PHP
+  session_start();
+
+  $refreshToken = $_SESSION['refresh_token'];
+  $accessTokenUrl = $_SESSION['accessTokenUrl'];
+  $clientId = $_SESSION['clientId'];
+  $clientSecret = $_SESSION['clientSecret'];
+
+  $params = "grant_type=refresh_token&refresh_token=$refreshToken&client_id=$clientId&client_secret=$clientSecret";
+
+  $opts = array('http' =>
+  array(
+  'method'  => 'POST',
+  'header'  => "Content-Type: application/json",
+  'timeout' => 60
+  )
+  );
+
+  $context = stream_context_create($opts);
+  $result = file_get_contents($accessTokenUrl . "?$params", false, $context, -1, 40000);
+  $jsonresult = json_decode($result);
+  $_SESSION['access_token'] = $jsonresult->access_token;
+  $_SESSION['refresh_token'] = $jsonresult->refresh_token;
+
+  header("Location: index.php");
+
+The http request which is done looks like this:
+
+.. code-block:: HTTP
+  POST /accounts/oauth/token?grant_type=refresh_token&refresh_token=35f5fb15-9364-464a-854b-9ac0b344f108&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&cliend_id=myclientid&client_secret=myclientsecret
+  Host: auth.marktplaats.nl
+
+The returned JSON object has the same structure as the one returned when requesting
+an *access_token*.
