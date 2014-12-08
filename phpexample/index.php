@@ -1,4 +1,7 @@
-<?php session_start();?>
+<?php session_start();
+$authUrl = 'https://auth.marktplaats.dev'
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,11 +30,11 @@
             <form role="form" method="POST" action="authenticate.php">
                 <div class="form-group">
                     <label for="authorizationUrl">authorizationUrl</label>
-                    <input type="text" class="form-control" id="authorizationUrl" name="authorizationUrl" placeholder="https://auth.demo.qa-mp.so/accounts/oauth/authorize" value="https://auth.demo.qa-mp.so/accounts/oauth/authorize">
+                    <input type="text" class="form-control" id="authorizationUrl" name="authorizationUrl" placeholder="<?=$authUrl?>/accounts/oauth/authorize" value="<?=$authUrl?>/accounts/oauth/authorize">
                 </div>
                 <div class="form-group">
                     <label for="accessTokenUrl">accessTokenUrl</label>
-                    <input type="text" class="form-control" id="accessTokenUrl" name="accessTokenUrl" placeholder="https://auth.demo.qa-mp.so/accounts/oauth/token" value="https://auth.demo.qa-mp.so/accounts/oauth/token">
+                    <input type="text" class="form-control" id="accessTokenUrl" name="accessTokenUrl" placeholder="<?=$authUrl?>/accounts/oauth/token" value="<?=$authUrl?>/accounts/oauth/token">
                 </div>
                 <div class="form-group">
                     <label for="redirectUri">redirectUri</label>
@@ -73,16 +76,29 @@
         <div class="panel-body">
             <form role="form" method="POST" action="refreshtoken.php">
                 <div class="dropdown">
-                    <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="btn btn-default">
+                    <button id="l1categories" type="button" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="btn btn-default">
                         Select category
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu l1cats" role="menu" aria-labelledby="dLabel">
+                    <ul class="dropdown-menu l1cats" role="menu" aria-labelledby="l1categories">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">item1</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">item2</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button id="l2categories" type="button" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="btn btn-default">
+                        Select category
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu l2cats" role="menu" aria-labelledby="l2categories">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">item1</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">item2</a></li>
                     </ul>
                 </div>
             </form>
+
+            <a href="categories.php">Place advertisement</a>
         </div>
     </div>
 </div>
@@ -91,27 +107,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-<script>
-    function initCategories() {
-        var accesstoken = $(".accesstoken").val();
-        if (accesstoken !== "") {
-            $.get("categories.php?access_token=" + accesstoken)
-                .done(function(result) {
-                    var $l1cats = $('.l1cats');
-                    $l1cats.empty();
-                    var l1cats = $.parseJSON(result);
-                    for (var i = 0; i < l1cats.length; i++) {
-                        $l1cats.append("<li role='presentation'><a role='menuitem' tabindex='-1' href='#' value='" + l1cats[i].id + "'>" + l1cats[i].name + "</a></li>");
-                    }
-                });
 
-        } else {
-            alert('undefined' + typeof(accesstoken));
-        }
-    }
-
-    $(document).ready(initCategories)
-
-</script>
 </body>
 </html>
