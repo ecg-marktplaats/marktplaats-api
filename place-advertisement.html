@@ -116,10 +116,10 @@
 in free categories, unless you have a contract with Marktplaats, in which case
 advertisements are payed using an invoice. This example will show how to place an
 advertisement in a free category including images.</p>
-<p>In this example we use the <em>access_token</em> <code class="docutils literal"><span class="pre">myaccesstoken</span></code> to illustrate that
+<p>In this example we use the <em>access_token</em> <tt class="docutils literal"><span class="pre">myaccesstoken</span></tt> to illustrate that
 in that place the <em>access_token</em> should be filled in.</p>
 <p>The full PHP example of which snippets are used in this guide can be found in this
-repository in the directory <code class="docutils literal"><span class="pre">/phpexample</span></code>.</p>
+repository in the directory <tt class="docutils literal"><span class="pre">/phpexample</span></tt>.</p>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>You need to have an <em>access_token</em> which can be used to authenticate the request
@@ -206,7 +206,7 @@ Content-Type: application/json
 <p>After we have determined which category we want to place the advertisement in,
 we can get the attributes for that category and use those to create the advertisement.
 For example, if we want to place an advertisement in the cd player category, we can
-get the attributes for that category by doing a GET request to <code class="docutils literal"><span class="pre">/v1/categories/31/35/attributes</span></code></p>
+get the attributes for that category by doing a GET request to <tt class="docutils literal"><span class="pre">/v1/categories/31/35/attributes</span></tt></p>
 <div class="highlight-HTTP"><div class="highlight"><pre>GET /v1/categories/31/35/attributes
 Host: api.marktplaats.nl
 Authorization: Bearer myaccesstoken
@@ -243,32 +243,32 @@ PUT or PATCH request on the advertisement).</p>
 <p>Based on the data for the category we want to place an advertisement in, we can construct
 the json required to post an advertisement. To continue with the example of a CD player,
 the JSON for a minimal advertisement should look something like this:</p>
-<div class="highlight-JSON"><div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">&quot;categoryId&quot;</span><span class="p">:</span><span class="mi">35</span><span class="p">,</span>
-  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="s2">&quot;Test cd player&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="s2">&quot;This is an awesome cd-player&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;condition&quot;</span><span class="p">:</span><span class="s2">&quot;Nieuw&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;brand&quot;</span><span class="p">:</span><span class="s2">&quot;Sony&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="s2">&quot;Draagbaar&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;delivery&quot;</span><span class="p">:</span><span class="s2">&quot;Ophalen&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;priceModel&quot;</span><span class="p">:{</span>
-    <span class="nt">&quot;modelType&quot;</span><span class="p">:</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;askingPrice&quot;</span><span class="p">:</span><span class="mi">3241</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;location&quot;</span><span class="p">:{</span>
-    <span class="nt">&quot;postcode&quot;</span><span class="p">:</span><span class="s2">&quot;1097DN&quot;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-JSON"><div class="highlight"><pre>{
+  &quot;categoryId&quot;:35,
+  &quot;title&quot;:&quot;Test cd player&quot;,
+  &quot;description&quot;:&quot;This is an awesome cd-player&quot;,
+  &quot;condition&quot;:&quot;Nieuw&quot;,
+  &quot;brand&quot;:&quot;Sony&quot;,
+  &quot;properties&quot;:&quot;Draagbaar&quot;,
+  &quot;delivery&quot;:&quot;Ophalen&quot;,
+  &quot;priceModel&quot;:{
+    &quot;modelType&quot;:&quot;fixed&quot;,
+    &quot;askingPrice&quot;:3241
+  },
+  &quot;location&quot;:{
+    &quot;postcode&quot;:&quot;1097DN&quot;
+  }
+}
 </pre></div>
 </div>
 <p>There are a couple of fields which are required, regardless of the category the
-advertisement is placed in: <code class="docutils literal"><span class="pre">categoryId</span></code>, <code class="docutils literal"><span class="pre">title</span></code>, <code class="docutils literal"><span class="pre">description</span></code>, <code class="docutils literal"><span class="pre">priceModel</span></code>
-and <code class="docutils literal"><span class="pre">location</span></code>. All the other fields are optional: <code class="docutils literal"><span class="pre">condition</span></code>, <code class="docutils literal"><span class="pre">brand</span></code>,
-<code class="docutils literal"><span class="pre">properties</span></code> and <code class="docutils literal"><span class="pre">delivery</span></code> are attributes of the category with id 35. Note
-that the <code class="docutils literal"><span class="pre">properties</span></code> attribute is of the type <code class="docutils literal"><span class="pre">LIST</span></code>, and can also contain
+advertisement is placed in: <tt class="docutils literal"><span class="pre">categoryId</span></tt>, <tt class="docutils literal"><span class="pre">title</span></tt>, <tt class="docutils literal"><span class="pre">description</span></tt>, <tt class="docutils literal"><span class="pre">priceModel</span></tt>
+and <tt class="docutils literal"><span class="pre">location</span></tt>. All the other fields are optional: <tt class="docutils literal"><span class="pre">condition</span></tt>, <tt class="docutils literal"><span class="pre">brand</span></tt>,
+<tt class="docutils literal"><span class="pre">properties</span></tt> and <tt class="docutils literal"><span class="pre">delivery</span></tt> are attributes of the category with id 35. Note
+that the <tt class="docutils literal"><span class="pre">properties</span></tt> attribute is of the type <tt class="docutils literal"><span class="pre">LIST</span></tt>, and can also contain
 a array of values instead of a single value.</p>
 <blockquote>
-<div><p>The JSON should be send to the Marktplaats API using a <code class="docutils literal"><span class="pre">POST</span></code> request:</p>
+<div><p>The JSON should be send to the Marktplaats API using a <tt class="docutils literal"><span class="pre">POST</span></tt> request:</p>
 <div class="highlight-HTTP"><div class="highlight"><pre>POST /v1/advertisements
 Host: api.marktplaats.nl
 Authorization: Bearer myaccesstoken
@@ -294,42 +294,42 @@ Content-Type: application/json
 </div></blockquote>
 <p>If we do this in PHP, and we have a form which is containing the field names matching
 the names of the API, it would look something like this:</p>
-<div class="highlight-PHP"><div class="highlight"><pre><span class="x">session_start();</span>
+<div class="highlight-PHP"><div class="highlight"><pre>session_start();
 
-<span class="x">$apiUrl = &#39;https://api.marktplaats.dev&#39;;</span>
-<span class="x">$accessToken = $_SESSION[&#39;access_token&#39;];</span>
+$apiUrl = &#39;https://api.marktplaats.dev&#39;;
+$accessToken = $_SESSION[&#39;access_token&#39;];
 
-<span class="x">$l1id=$_GET[&#39;l1id&#39;];</span>
-<span class="x">$categoryId = $_POST[&#39;categoryId&#39;];</span>
+$l1id=$_GET[&#39;l1id&#39;];
+$categoryId = $_POST[&#39;categoryId&#39;];
 
-<span class="x">$adData = $_POST;</span>
-<span class="x">$fixedPrice = $_POST[&#39;fixedPrice&#39;];</span>
-<span class="x">unset($adData[&#39;fixedPrice&#39;]);</span>
-<span class="x">$adData[&#39;priceModel&#39;][&#39;modelType&#39;] = &#39;fixed&#39;;</span>
-<span class="x">$adData[&#39;priceModel&#39;][&#39;askingPrice&#39;] = intval($fixedPrice);</span>
-<span class="x">$adData[&#39;location&#39;][&#39;postcode&#39;] = $adData[&#39;postcode&#39;];</span>
-<span class="x">unset($adData[&#39;postcode&#39;]);</span>
-<span class="x">$adData[&#39;categoryId&#39;] = intval($adData[&#39;categoryId&#39;]);</span>
+$adData = $_POST;
+$fixedPrice = $_POST[&#39;fixedPrice&#39;];
+unset($adData[&#39;fixedPrice&#39;]);
+$adData[&#39;priceModel&#39;][&#39;modelType&#39;] = &#39;fixed&#39;;
+$adData[&#39;priceModel&#39;][&#39;askingPrice&#39;] = intval($fixedPrice);
+$adData[&#39;location&#39;][&#39;postcode&#39;] = $adData[&#39;postcode&#39;];
+unset($adData[&#39;postcode&#39;]);
+$adData[&#39;categoryId&#39;] = intval($adData[&#39;categoryId&#39;]);
 
-<span class="x">$attributes = retrieveAttributes($apiUrl, $l1id, $categoryId, $accessToken);</span>
+$attributes = retrieveAttributes($apiUrl, $l1id, $categoryId, $accessToken);
 
-<span class="x">foreach($attributes-&gt;fields as $attribute) {</span>
-<span class="x">  if ($attribute-&gt;type == &#39;NUMERIC&#39; &amp;&amp; isset($adData[$attribute-&gt;key])) {</span>
-<span class="x">    $adData[$attribute-&gt;key] = intval($adData[$attribute-&gt;key]);</span>
-<span class="x">  }</span>
-<span class="x">}</span>
+foreach($attributes-&gt;fields as $attribute) {
+  if ($attribute-&gt;type == &#39;NUMERIC&#39; &amp;&amp; isset($adData[$attribute-&gt;key])) {
+    $adData[$attribute-&gt;key] = intval($adData[$attribute-&gt;key]);
+  }
+}
 
-<span class="x">$adJson = json_encode($adData);</span>
+$adJson = json_encode($adData);
 
-<span class="x">$url = $apiUrl . &quot;/v1/advertisements?_links=false&quot;;</span>
-<span class="x">$jsonresult = apiCall($url, $adJson, $accessToken, &#39;POST&#39;);</span>
+$url = $apiUrl . &quot;/v1/advertisements?_links=false&quot;;
+$jsonresult = apiCall($url, $adJson, $accessToken, &#39;POST&#39;);
 </pre></div>
 </div>
-<p>Most code is needed to correct the type of numeric fields (like <code class="docutils literal"><span class="pre">categoryId</span></code>).
+<p>Most code is needed to correct the type of numeric fields (like <tt class="docutils literal"><span class="pre">categoryId</span></tt>).
 Note that the snippet above lacks any form of error handling. In any production
 usage of the API, errors should be handled. The API returns a common error document
 which contains both machine readable as well as human readable error messages.
-When the language is set correctly in the request, using the <code class="docutils literal"><span class="pre">accept-language</span></code>
+When the language is set correctly in the request, using the <tt class="docutils literal"><span class="pre">accept-language</span></tt>
 header, the messages are returned in the correct language. At the moment the only
 supported languages are Dutch and English.</p>
 </div>
@@ -394,7 +394,7 @@ supported languages are Dutch and English.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

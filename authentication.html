@@ -123,8 +123,8 @@ registered. In order to do this, contact Marktplaats and ask if you can get acce
 You will need to give a <em>redirect_uri</em> which is an endpoint on your side to handle redirects
 from the Marktplaats authentication server. In return you will receive a <em>client_id</em> and
 <em>client_secret</em>, which is needed in order to do the authentication with the Marktplaats API.</p>
-<p>In this example we use the <em>client_id</em> <code class="docutils literal"><span class="pre">myclientid</span></code> and <em>client_secret</em> <code class="docutils literal"><span class="pre">myclientsecret</span></code>.
-The <em>redirect_uri</em> we use is <code class="docutils literal"><span class="pre">http://localhost:3210/processredirect.php</span></code></p>
+<p>In this example we use the <em>client_id</em> <tt class="docutils literal"><span class="pre">myclientid</span></tt> and <em>client_secret</em> <tt class="docutils literal"><span class="pre">myclientsecret</span></tt>.
+The <em>redirect_uri</em> we use is <tt class="docutils literal"><span class="pre">http://localhost:3210/processredirect.php</span></tt></p>
 </div>
 <div class="section" id="step-1-obtaining-authorization-code">
 <h2>Step 1: obtaining authorization code<a class="headerlink" href="#step-1-obtaining-authorization-code" title="Permalink to this headline">¶</a></h2>
@@ -136,13 +136,13 @@ Authorization server:</p>
 <blockquote>
 <div>GET /accounts/oauth/authorize?response_type=code&amp;client_id=myclientid&amp;state=randomstate&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php
 Host: auth.marktplaats.nl</div></blockquote>
-<p>In the PHP example we POST a HTML form to the <code class="docutils literal"><span class="pre">authenticate.php</span></code> with <code class="docutils literal"><span class="pre">clientId</span></code>,
-<code class="docutils literal"><span class="pre">clientSecret</span></code>, <code class="docutils literal"><span class="pre">authorizationUrl</span></code>, <code class="docutils literal"><span class="pre">accessTokenUrl</span></code> and <code class="docutils literal"><span class="pre">redirectUri</span></code> as
-parameters. <code class="docutils literal"><span class="pre">authorizationUrl</span></code> is the URL which is used to retrieve the <em>authorization_code</em>
-while <code class="docutils literal"><span class="pre">accessTokenUrl</span></code> is the URL which is used to retrieve the <em>access_token</em>. These URL
-for our production site are respectively <code class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/authorize</span></code>
-and <code class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/token</span></code></p>
-<div class="highlight-PHP"><div class="highlight"><pre><span class="x">.. literalinclude:: ../phpexample/authenticate.php</span>
+<p>In the PHP example we POST a HTML form to the <tt class="docutils literal"><span class="pre">authenticate.php</span></tt> with <tt class="docutils literal"><span class="pre">clientId</span></tt>,
+<tt class="docutils literal"><span class="pre">clientSecret</span></tt>, <tt class="docutils literal"><span class="pre">authorizationUrl</span></tt>, <tt class="docutils literal"><span class="pre">accessTokenUrl</span></tt> and <tt class="docutils literal"><span class="pre">redirectUri</span></tt> as
+parameters. <tt class="docutils literal"><span class="pre">authorizationUrl</span></tt> is the URL which is used to retrieve the <em>authorization_code</em>
+while <tt class="docutils literal"><span class="pre">accessTokenUrl</span></tt> is the URL which is used to retrieve the <em>access_token</em>. These URL
+for our production site are respectively <tt class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/authorize</span></tt>
+and <tt class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/token</span></tt></p>
+<div class="highlight-PHP"><div class="highlight"><pre>.. literalinclude:: ../phpexample/authenticate.php
 </pre></div>
 </div>
 <p>After performing this step, the user will see a login page (in case he is not yet
@@ -150,7 +150,7 @@ logged in on the Marktplaats.nl website) and a confirmation page to grand access
 the client (app) which is requesting the authorization.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The optional parameter <code class="docutils literal"><span class="pre">state</span></code> can be used to store information which will later be
+<p class="last">The optional parameter <tt class="docutils literal"><span class="pre">state</span></tt> can be used to store information which will later be
 returned by the authorization server on the redirect. If you don&#8217;t need to transfer
 information, it is a good idea to still put a value in this parameter, in order to
 prevent Cross-site request forgery attempts.</p>
@@ -161,45 +161,45 @@ prevent Cross-site request forgery attempts.</p>
 <h2>Step 2: Retrieving the <em>access_token</em><a class="headerlink" href="#step-2-retrieving-the-access-token" title="Permalink to this headline">¶</a></h2>
 <p>When the resource owner (user) grants access to your client to access Marktplaats.nl
 on his behalf, the Marktplaats Authorization server will redirect the users&#8217; browser
-to the provided <em>redirect_uri</em>, which is in our case <code class="docutils literal"><span class="pre">http://localhost:3210/processredirect.php</span></code>
-with the <code class="docutils literal"><span class="pre">code</span></code> as a parameter, which contains the <em>authorization_code</em> to be used to
+to the provided <em>redirect_uri</em>, which is in our case <tt class="docutils literal"><span class="pre">http://localhost:3210/processredirect.php</span></tt>
+with the <tt class="docutils literal"><span class="pre">code</span></tt> as a parameter, which contains the <em>authorization_code</em> to be used to
 retrieve the access_token. Our next task is to handle this redirect and retrieve
-the <em>access_token</em> using the provided <code class="docutils literal"><span class="pre">code</span></code>.</p>
-<div class="highlight-PHP"><div class="highlight"><pre><span class="x">session_start();</span>
-<span class="x">$authcode = $_GET[&#39;code&#39;];</span>
-<span class="x">$state = $_GET[&#39;state&#39;];</span>
+the <em>access_token</em> using the provided <tt class="docutils literal"><span class="pre">code</span></tt>.</p>
+<div class="highlight-PHP"><div class="highlight"><pre>session_start();
+$authcode = $_GET[&#39;code&#39;];
+$state = $_GET[&#39;state&#39;];
 </pre></div>
 </div>
-<p>This starts the PHP session, and stores the provided <code class="docutils literal"><span class="pre">code</span></code> in the variable
-<code class="docutils literal"><span class="pre">$authcode</span></code> as well as the <code class="docutils literal"><span class="pre">state</span></code> parameter.</p>
-<div class="highlight-PHP"><div class="highlight"><pre><span class="x">$clientId = $_SESSION[&#39;clientId&#39;];</span>
-<span class="x">$clientSecret = $_SESSION[&#39;clientSecret&#39;];</span>
-<span class="x">$accessTokenUrl = $_SESSION[&#39;accessTokenUrl&#39;];</span>
-<span class="x">$redirectUri = $_SESSION[&#39;redirectUri&#39;];</span>
+<p>This starts the PHP session, and stores the provided <tt class="docutils literal"><span class="pre">code</span></tt> in the variable
+<tt class="docutils literal"><span class="pre">$authcode</span></tt> as well as the <tt class="docutils literal"><span class="pre">state</span></tt> parameter.</p>
+<div class="highlight-PHP"><div class="highlight"><pre>$clientId = $_SESSION[&#39;clientId&#39;];
+$clientSecret = $_SESSION[&#39;clientSecret&#39;];
+$accessTokenUrl = $_SESSION[&#39;accessTokenUrl&#39;];
+$redirectUri = $_SESSION[&#39;redirectUri&#39;];
 
 
-<span class="x">$params = &quot;grant_type=authorization_code&amp;code=$authcode&amp;redirect_uri=$redirectUri&amp;client_id=$clientId&amp;client_secret=$clientSecret&quot;;</span>
+$params = &quot;grant_type=authorization_code&amp;code=$authcode&amp;redirect_uri=$redirectUri&amp;client_id=$clientId&amp;client_secret=$clientSecret&quot;;
 
-<span class="x">$opts = array(&#39;http&#39; =&gt;</span>
-<span class="x">array(</span>
-<span class="x">&#39;method&#39;  =&gt; &#39;POST&#39;,</span>
-<span class="x">&#39;header&#39;  =&gt; &quot;Content-Type: application/json&quot;,</span>
-<span class="x">&#39;timeout&#39; =&gt; 60</span>
-<span class="x">)</span>
-<span class="x">);</span>
+$opts = array(&#39;http&#39; =&gt;
+array(
+&#39;method&#39;  =&gt; &#39;POST&#39;,
+&#39;header&#39;  =&gt; &quot;Content-Type: application/json&quot;,
+&#39;timeout&#39; =&gt; 60
+)
+);
 
-<span class="x">//echo $params;</span>
+//echo $params;
 
-<span class="x">$context = stream_context_create($opts);</span>
-<span class="x">$result = file_get_contents($accessTokenUrl . &quot;?$params&quot;, false, $context, -1, 40000);</span>
-<span class="x">$jsonresult = json_decode($result);</span>
-<span class="x">$_SESSION[&#39;access_token&#39;] = $jsonresult-&gt;access_token;</span>
-<span class="x">$_SESSION[&#39;refresh_token&#39;] = $jsonresult-&gt;refresh_token;</span>
+$context = stream_context_create($opts);
+$result = file_get_contents($accessTokenUrl . &quot;?$params&quot;, false, $context, -1, 40000);
+$jsonresult = json_decode($result);
+$_SESSION[&#39;access_token&#39;] = $jsonresult-&gt;access_token;
+$_SESSION[&#39;refresh_token&#39;] = $jsonresult-&gt;refresh_token;
 
-<span class="x">header(&quot;Location: index.php&quot;);</span>
+header(&quot;Location: index.php&quot;);
 </pre></div>
 </div>
-<p>With the received <em>authorization_code</em> in the <code class="docutils literal"><span class="pre">code</span></code> parameter, and the data
+<p>With the received <em>authorization_code</em> in the <tt class="docutils literal"><span class="pre">code</span></tt> parameter, and the data
 which we stored in the session (which is the <em>client_id</em>, <em>client_secret</em>,
 <em>access token url</em> and <em>redirect_uri</em>) we can construct the request to obtain an
 <em>access_token</em>. For this, we construct the parameters for the request and do a
@@ -211,13 +211,13 @@ Host: auth.marktplaats.nl
 </div>
 <p>The result of this POST request should be
 a <em>200 OK</em>, and a JSON object in the body which looks like this:</p>
-<div class="highlight-JSON"><div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">&quot;access_token&quot;</span><span class="p">:</span><span class="s2">&quot;d79b4761-2268-4f03-a068-01eb26b3c7d2&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;token_type&quot;</span><span class="p">:</span><span class="s2">&quot;Bearer&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;expires_in&quot;</span><span class="p">:</span><span class="mi">43199</span><span class="p">,</span>
-  <span class="nt">&quot;refresh_token&quot;</span><span class="p">:</span><span class="s2">&quot;d5bd2dcf-1219-4b65-aacc-86149ba55fb0&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="s2">&quot;read,write&quot;</span>
-<span class="p">}</span>
+<div class="highlight-JSON"><div class="highlight"><pre>{
+  &quot;access_token&quot;:&quot;d79b4761-2268-4f03-a068-01eb26b3c7d2&quot;,
+  &quot;token_type&quot;:&quot;Bearer&quot;,
+  &quot;expires_in&quot;:43199,
+  &quot;refresh_token&quot;:&quot;d5bd2dcf-1219-4b65-aacc-86149ba55fb0&quot;,
+  &quot;scope&quot;:&quot;read,write&quot;
+}
 </pre></div>
 </div>
 <p>You need to store the returned <em>access_token</em> and <em>refresh_token</em>, so you can reuse
@@ -231,30 +231,30 @@ after 24 hours. The <em>refresh_token</em> will not expire and as such is crucia
 process of giving your users an unutrusive experience.</p>
 <p>To get a new access token you need to do a HTTP POST request to the token endpoint.
 This is very similar to obtaining the access token:</p>
-<div class="highlight-PHP"><div class="highlight"><pre><span class="x">session_start();</span>
+<div class="highlight-PHP"><div class="highlight"><pre>session_start();
 
-<span class="x">$refreshToken = $_SESSION[&#39;refresh_token&#39;];</span>
-<span class="x">$accessTokenUrl = $_SESSION[&#39;accessTokenUrl&#39;];</span>
-<span class="x">$clientId = $_SESSION[&#39;clientId&#39;];</span>
-<span class="x">$clientSecret = $_SESSION[&#39;clientSecret&#39;];</span>
+$refreshToken = $_SESSION[&#39;refresh_token&#39;];
+$accessTokenUrl = $_SESSION[&#39;accessTokenUrl&#39;];
+$clientId = $_SESSION[&#39;clientId&#39;];
+$clientSecret = $_SESSION[&#39;clientSecret&#39;];
 
-<span class="x">$params = &quot;grant_type=refresh_token&amp;refresh_token=$refreshToken&amp;client_id=$clientId&amp;client_secret=$clientSecret&quot;;</span>
+$params = &quot;grant_type=refresh_token&amp;refresh_token=$refreshToken&amp;client_id=$clientId&amp;client_secret=$clientSecret&quot;;
 
-<span class="x">$opts = array(&#39;http&#39; =&gt;</span>
-<span class="x">array(</span>
-<span class="x">&#39;method&#39;  =&gt; &#39;POST&#39;,</span>
-<span class="x">&#39;header&#39;  =&gt; &quot;Content-Type: application/json&quot;,</span>
-<span class="x">&#39;timeout&#39; =&gt; 60</span>
-<span class="x">)</span>
-<span class="x">);</span>
+$opts = array(&#39;http&#39; =&gt;
+array(
+&#39;method&#39;  =&gt; &#39;POST&#39;,
+&#39;header&#39;  =&gt; &quot;Content-Type: application/json&quot;,
+&#39;timeout&#39; =&gt; 60
+)
+);
 
-<span class="x">$context = stream_context_create($opts);</span>
-<span class="x">$result = file_get_contents($accessTokenUrl . &quot;?$params&quot;, false, $context, -1, 40000);</span>
-<span class="x">$jsonresult = json_decode($result);</span>
-<span class="x">$_SESSION[&#39;access_token&#39;] = $jsonresult-&gt;access_token;</span>
-<span class="x">$_SESSION[&#39;refresh_token&#39;] = $jsonresult-&gt;refresh_token;</span>
+$context = stream_context_create($opts);
+$result = file_get_contents($accessTokenUrl . &quot;?$params&quot;, false, $context, -1, 40000);
+$jsonresult = json_decode($result);
+$_SESSION[&#39;access_token&#39;] = $jsonresult-&gt;access_token;
+$_SESSION[&#39;refresh_token&#39;] = $jsonresult-&gt;refresh_token;
 
-<span class="x">header(&quot;Location: index.php&quot;);</span>
+header(&quot;Location: index.php&quot;);
 </pre></div>
 </div>
 <p>The http request which is done looks like this:</p>
@@ -314,7 +314,7 @@ an <em>access_token</em>.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
