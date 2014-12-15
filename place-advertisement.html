@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Place Advertisement &mdash; Marktplaats API Userguide 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Marktplaats API Userguide 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Buying User Features" href="buying-user-features.html"/>
+        <link rel="prev" title="Authentication" href="authentication.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Marktplaats API Userguide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="authentication.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication.html#step-1-obtaining-authorization-code">Step 1: obtaining authorization code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication.html#step-2-retrieving-the-access-token">Step 2: Retrieving the <em>access_token</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication.html#step-3-refreshing-the-access-token">Step 3: Refreshing the <em>access_token</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Place Advertisement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-get-the-attributes-for-an-category">Step 1: Get the attributes for an category</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-create-the-advertisement-json">Step 2: Create the advertisement JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-adding-images">Step 3: Adding images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-4-buying-features">Step 4: Buying features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-5-updating-the-advertisement">Step 5: Updating the advertisement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="buying-user-features.html">Buying User Features</a></li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Marktplaats API Userguide</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Place Advertisement</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/place-advertisement.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="place-advertisement">
+<span id="index-0"></span><span id="id1"></span><h1>Place Advertisement<a class="headerlink" href="#place-advertisement" title="Permalink to this headline">¶</a></h1>
+<p>Placing an advertisement using the Marktplaats API is at the moment only possible
+in free categories, unless you have a contract with Marktplaats, in which case
+advertisements are payed using an invoice. This example will show how to place an
+advertisement in a free category including images.</p>
+<p>In this example we use the <em>access_token</em> <code class="docutils literal"><span class="pre">myaccesstoken</span></code> to illustrate that
+in that place the <em>access_token</em> should be filled in.</p>
+<p>The full PHP example of which snippets are used in this guide can be found in this
+repository in the directory <code class="docutils literal"><span class="pre">/phpexample</span></code>.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>You need to have an <em>access_token</em> which can be used to authenticate the request
+to the API. See <a class="reference internal" href="authentication.html#authentication"><em>Authentication</em></a> on how to get such a token.</p>
+</div>
+<div class="section" id="step-1-get-the-attributes-for-an-category">
+<h2>Step 1: Get the attributes for an category<a class="headerlink" href="#step-1-get-the-attributes-for-an-category" title="Permalink to this headline">¶</a></h2>
+<p>Before we can place an advertisement, we need to now which in which category we
+will place the advertisement and which <em>attributes</em> we can use. <em>Attributes</em> are
+nothing more than <em>fields</em> in the JSON, but which are specific for the category
+the advertisement is placed in. For example, in a cars category, you can specify
+the <em>constructionYear</em> or the <em>model</em>, but these fields are not available in the
+books category. Some categories have mandatory fields. These fields have to be
+provided when creating a new advertisement. For example, in the cd players category,
+the condition attribute is mandatory.</p>
+<p>To get all the categories on Marktplaats we do a GET request on the endpoint
+/v1/categories:</p>
+<div class="highlight-HTTP"><div class="highlight"><pre>GET /v1/categories
+Host: api.marktplaats.nl
+Authorization: Bearer myaccesstoken
+Content-Type: application/json
+</pre></div>
+</div>
+<p>The response is a JSON object with all top level categories on Marktplaats:</p>
+<div class="highlight-JSON"><div class="highlight"><pre>{
+  &quot;_links&quot;: {
+    &quot;self&quot;: {
+      &quot;href&quot;: &quot;/v1/categories&quot;
+    },
+    &quot;find&quot;: {
+      &quot;href&quot;: &quot;/v1/categories{?categoryId}&quot;,
+      &quot;templated&quot;: true
+    },
+    &quot;describedby&quot;: {
+      &quot;href&quot;: &quot;https://api.demo.qa-mp.so/docs/v1/categories.html&quot;
+    },
+    &quot;curies&quot;: [
+      {
+        &quot;href&quot;: &quot;https://api.demo.qa-mp.so/docs/v1/rels/{rel}.html&quot;,
+        &quot;templated&quot;: true,
+        &quot;name&quot;: &quot;mp&quot;
+      }
+    ]
+  },
+  &quot;_embedded&quot;: {
+    &quot;mp:category&quot;: [
+      {
+        &quot;_links&quot;: {
+          &quot;self&quot;: {
+            &quot;href&quot;: &quot;/v1/categories/1&quot;
+          },
+          &quot;up&quot;: {
+            &quot;href&quot;: &quot;/v1/categories&quot;
+          }
+        },
+      &quot;_embedded&quot;: {
+        &quot;mp:category&quot;: [
+          {
+            &quot;_links&quot;: {
+            &quot;self&quot;: {
+            &quot;href&quot;: &quot;/v1/categories/1/2&quot;
+            },
+            &quot;up&quot;: {
+            &quot;href&quot;: &quot;/v1/categories/1&quot;
+            },
+              &quot;mp:category-attributes&quot;: {
+              &quot;href&quot;: &quot;/v1/categories/1/2/attributes&quot;
+            }
+            },
+              &quot;categoryId&quot;: 2,
+              &quot;name&quot;: &quot;Antiek | Bestek&quot;
+            },
+          ...
+          }
+        ]
+      },
+      ...
+    ]
+  }
+}
+</pre></div>
+</div>
+<p>The result above is abbreviated, but the idea is clear.</p>
+<p>After we have determined which category we want to place the advertisement in,
+we can get the attributes for that category and use those to create the advertisement.
+For example, if we want to place an advertisement in the cd player category, we can
+get the attributes for that category by doing a GET request to <code class="docutils literal"><span class="pre">/v1/categories/31/35/attributes</span></code></p>
+<div class="highlight-HTTP"><div class="highlight"><pre>GET /v1/categories/31/35/attributes
+Host: api.marktplaats.nl
+Authorization: Bearer myaccesstoken
+Content-Type: application/json
+</pre></div>
+</div>
+<p>The result will be a list of attributes, where each attribute has the following
+structure:</p>
+<div class="highlight-JSON"><div class="highlight"><pre>{
+  &quot;key&quot;: &quot;properties&quot;,
+  &quot;label&quot;: &quot;Eigenschappen&quot;,
+  &quot;type&quot;: &quot;LIST&quot;,
+  &quot;values&quot;: [
+    &quot;Wisselaar&quot;,
+    &quot;Draagbaar&quot;,
+    &quot;Met radio&quot;
+  ],
+  &quot;mandatory&quot;: false,
+  &quot;searchable&quot;: true,
+  &quot;writable&quot;: true,
+  &quot;updateable&quot;: true
+},
+</pre></div>
+</div>
+<p>This attribute <em>properties</em> will be presented as <em>Eigenschappen</em> on the website,
+and it only accepts the values listed in the <em>values</em> array. If a different value
+is specified, an error will be produced. Furthermore, the attribute is not mandatory,
+it is possible to search on the attribute (on the website), it can be written (which
+means you can set it while placing an advertisement) and it can be updated (using a
+PUT or PATCH request on the advertisement).</p>
+</div>
+<div class="section" id="step-2-create-the-advertisement-json">
+<h2>Step 2: Create the advertisement JSON<a class="headerlink" href="#step-2-create-the-advertisement-json" title="Permalink to this headline">¶</a></h2>
+<p>Based on the data for the category we want to place an advertisement in, we can construct
+the json required to post an advertisement. To continue with the example of a CD player,
+the JSON for a minimal advertisement should look something like this:</p>
+<div class="highlight-JSON"><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;categoryId&quot;</span><span class="p">:</span><span class="mi">35</span><span class="p">,</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="s2">&quot;Test cd player&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="s2">&quot;This is an awesome cd-player&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;condition&quot;</span><span class="p">:</span><span class="s2">&quot;Nieuw&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;brand&quot;</span><span class="p">:</span><span class="s2">&quot;Sony&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="s2">&quot;Draagbaar&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;delivery&quot;</span><span class="p">:</span><span class="s2">&quot;Ophalen&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;priceModel&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;modelType&quot;</span><span class="p">:</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;askingPrice&quot;</span><span class="p">:</span><span class="mi">3241</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;location&quot;</span><span class="p">:{</span>
+    <span class="nt">&quot;postcode&quot;</span><span class="p">:</span><span class="s2">&quot;1097DN&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There are a couple of fields which are required, regardless of the category the
+advertisement is placed in: <code class="docutils literal"><span class="pre">categoryId</span></code>, <code class="docutils literal"><span class="pre">title</span></code>, <code class="docutils literal"><span class="pre">description</span></code>, <code class="docutils literal"><span class="pre">priceModel</span></code>
+and <code class="docutils literal"><span class="pre">location</span></code>. All the other fields are optional: <code class="docutils literal"><span class="pre">condition</span></code>, <code class="docutils literal"><span class="pre">brand</span></code>,
+<code class="docutils literal"><span class="pre">properties</span></code> and <code class="docutils literal"><span class="pre">delivery</span></code> are attributes of the category with id 35. Note
+that the <code class="docutils literal"><span class="pre">properties</span></code> attribute is of the type <code class="docutils literal"><span class="pre">LIST</span></code>, and can also contain
+a array of values instead of a single value.</p>
+<blockquote>
+<div><p>The JSON should be send to the Marktplaats API using a <code class="docutils literal"><span class="pre">POST</span></code> request:</p>
+<div class="highlight-HTTP"><div class="highlight"><pre>POST /v1/advertisements
+Host: api.marktplaats.nl
+Authorization: Bearer myaccesstoken
+Content-Type: application/json
+{
+  &quot;categoryId&quot;:35,
+  &quot;title&quot;:&quot;Test cd player&quot;,
+  &quot;description&quot;:&quot;This is an awesome cd-player&quot;,
+  &quot;condition&quot;:&quot;Nieuw&quot;,
+  &quot;brand&quot;:&quot;Sony&quot;,
+  &quot;properties&quot;:&quot;Draagbaar&quot;,
+  &quot;delivery&quot;:&quot;Ophalen&quot;,
+  &quot;priceModel&quot;:{
+    &quot;modelType&quot;:&quot;fixed&quot;,
+    &quot;askingPrice&quot;:3241
+  },
+  &quot;location&quot;:{
+    &quot;postcode&quot;:&quot;1097DN&quot;
+  }
+}
+</pre></div>
+</div>
+</div></blockquote>
+<p>If we do this in PHP, and we have a form which is containing the field names matching
+the names of the API, it would look something like this:</p>
+<div class="highlight-PHP"><div class="highlight"><pre><span class="x">session_start();</span>
+
+<span class="x">$apiUrl = &#39;https://api.marktplaats.dev&#39;;</span>
+<span class="x">$accessToken = $_SESSION[&#39;access_token&#39;];</span>
+
+<span class="x">$l1id=$_GET[&#39;l1id&#39;];</span>
+<span class="x">$categoryId = $_POST[&#39;categoryId&#39;];</span>
+
+<span class="x">$adData = $_POST;</span>
+<span class="x">$fixedPrice = $_POST[&#39;fixedPrice&#39;];</span>
+<span class="x">unset($adData[&#39;fixedPrice&#39;]);</span>
+<span class="x">$adData[&#39;priceModel&#39;][&#39;modelType&#39;] = &#39;fixed&#39;;</span>
+<span class="x">$adData[&#39;priceModel&#39;][&#39;askingPrice&#39;] = intval($fixedPrice);</span>
+<span class="x">$adData[&#39;location&#39;][&#39;postcode&#39;] = $adData[&#39;postcode&#39;];</span>
+<span class="x">unset($adData[&#39;postcode&#39;]);</span>
+<span class="x">$adData[&#39;categoryId&#39;] = intval($adData[&#39;categoryId&#39;]);</span>
+
+<span class="x">$attributes = retrieveAttributes($apiUrl, $l1id, $categoryId, $accessToken);</span>
+
+<span class="x">foreach($attributes-&gt;fields as $attribute) {</span>
+<span class="x">  if ($attribute-&gt;type == &#39;NUMERIC&#39; &amp;&amp; isset($adData[$attribute-&gt;key])) {</span>
+<span class="x">    $adData[$attribute-&gt;key] = intval($adData[$attribute-&gt;key]);</span>
+<span class="x">  }</span>
+<span class="x">}</span>
+
+<span class="x">$adJson = json_encode($adData);</span>
+
+<span class="x">$url = $apiUrl . &quot;/v1/advertisements?_links=false&quot;;</span>
+<span class="x">$jsonresult = apiCall($url, $adJson, $accessToken, &#39;POST&#39;);</span>
+</pre></div>
+</div>
+<p>Most code is needed to correct the type of numeric fields (like <code class="docutils literal"><span class="pre">categoryId</span></code>).
+Note that the snippet above lacks any form of error handling. In any production
+usage of the API, errors should be handled. The API returns a common error document
+which contains both machine readable as well as human readable error messages.
+When the language is set correctly in the request, using the <code class="docutils literal"><span class="pre">accept-language</span></code>
+header, the messages are returned in the correct language. At the moment the only
+supported languages are Dutch and English.</p>
+</div>
+<div class="section" id="step-3-adding-images">
+<h2>Step 3: Adding images<a class="headerlink" href="#step-3-adding-images" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="step-4-buying-features">
+<h2>Step 4: Buying features<a class="headerlink" href="#step-4-buying-features" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="step-5-updating-the-advertisement">
+<h2>Step 5: Updating the advertisement<a class="headerlink" href="#step-5-updating-the-advertisement" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="buying-user-features.html" class="btn btn-neutral float-right" title="Buying User Features"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="authentication.html" class="btn btn-neutral" title="Authentication"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Marktplaats bv.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
