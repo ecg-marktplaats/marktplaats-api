@@ -39,6 +39,7 @@ To get all the categories on Marktplaats we do a GET request on the endpoint
 /v1/categories:
 
 .. code-block:: HTTP
+
   GET /v1/categories
   Host: api.marktplaats.nl
   Authorization: Bearer myaccesstoken
@@ -47,6 +48,7 @@ To get all the categories on Marktplaats we do a GET request on the endpoint
 The response is a JSON object with all top level categories on Marktplaats:
 
 .. code-block:: JSON
+
   {
     "_links": {
       "self": {
@@ -112,6 +114,7 @@ For example, if we want to place an advertisement in the cd player category, we 
 get the attributes for that category by doing a GET request to ``/v1/categories/31/35/attributes``
 
 .. code-block:: HTTP
+
   GET /v1/categories/31/35/attributes
   Host: api.marktplaats.nl
   Authorization: Bearer myaccesstoken
@@ -153,6 +156,7 @@ the json required to post an advertisement. To continue with the example of a CD
 the JSON for a minimal advertisement should look something like this:
 
 .. code-block:: JSON
+
   {
     "categoryId":35,
     "title":"Test cd player",
@@ -172,14 +176,15 @@ the JSON for a minimal advertisement should look something like this:
 
 There are a couple of fields which are required, regardless of the category the
 advertisement is placed in: ``categoryId``, ``title``, ``description``, ``priceModel``
- and ``location``. All the other fields are optional: ``condition``, ``brand``,
- ``properties`` and ``delivery`` are attributes of the category with id 35. Note
- that the ``properties`` attribute is of the type ``LIST``, and can also contain
- a array of values instead of a single value.
+and ``location``. All the other fields are optional: ``condition``, ``brand``,
+``properties`` and ``delivery`` are attributes of the category with id 35. Note
+that the ``properties`` attribute is of the type ``LIST``, and can also contain
+a array of values instead of a single value.
 
  The JSON should be send to the Marktplaats API using a ``POST`` request:
 
  .. code-block:: HTTP
+
   POST /v1/advertisements
   Host: api.marktplaats.nl
   Authorization: Bearer myaccesstoken
@@ -205,7 +210,8 @@ If we do this in PHP, and we have a form which is containing the field names mat
 the names of the API, it would look something like this:
 
 .. code-block:: PHP
-session_start();
+
+  session_start();
 
   $apiUrl = 'https://api.marktplaats.dev';
   $accessToken = $_SESSION['access_token'];
@@ -256,4 +262,4 @@ TODO
 Step 5: Updating the advertisement
 ----------------------------------
 
-TODO 
+TODO
