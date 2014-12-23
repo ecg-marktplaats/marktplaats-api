@@ -43,7 +43,6 @@ To get all the categories on Marktplaats we do a GET request on the endpoint
   GET /v1/categories
   Host: api.marktplaats.nl
   Authorization: Bearer myaccesstoken
-  Content-Type: application/json
 
 The response is a JSON object with all top level categories on Marktplaats:
 
@@ -118,7 +117,6 @@ get the attributes for that category by doing a GET request to ``/v1/categories/
   GET /v1/categories/31/35/attributes
   Host: api.marktplaats.nl
   Authorization: Bearer myaccesstoken
-  Content-Type: application/json
 
 The result will be a list of attributes, where each attribute has the following
 structure:
@@ -252,7 +250,157 @@ supported languages are Dutch and English.
 Step 3: Adding images
 ---------------------
 
-TODO
+After successfully having created an advertisement, the first thing you will usually
+want to do, is attach images to your advertisement.
+
+To do this you do a ``POST`` request to the images endpoint.
+
+.. code-block:: http
+
+    POST /v1/advertisements/m1000/images HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
+    Content-Type: application/json
+
+    {
+      "urls": [ "http://www.marktplaats.nl/i/common/images/marktplaats-logo.png", "http://www.marktplaats.nl/i/common/images/mensen.jpg" ],
+      "replaceAll": true
+    }
+
+
+.. code-block:: http
+
+    HTTP/1.1 202 Accepted
+    Content-Type: application/json;charset=UTF-8
+
+    {
+       "_links":{
+          "curies":[
+             {
+                "href":"https://api.marktplaats.dev/docs/v1/rels/{rel}.html",
+                "templated":true,
+                "name":"mp"
+             }
+          ]
+       },
+       "_embedded":{
+          "mp:advertisement-image":[
+             {
+                "_links":{
+                   "self":{
+                      "href":"/v1/images/7"
+                   },
+                   "mp:image-blob":{
+                      "href":"/v1/images/7/{size}/blob",
+                      "templated":true
+                   },
+                   "mp:image-meta":{
+                      "href":"/v1/images/7/{size}/meta",
+                      "templated":true
+                   }
+                },
+                "imageId":7,
+                "status":"downloading"
+             },
+             {
+                "_links":{
+                   "self":{
+                      "href":"/v1/images/8"
+                   },
+                   "mp:image-blob":{
+                      "href":"/v1/images/8/{size}/blob",
+                      "templated":true
+                   },
+                   "mp:image-meta":{
+                      "href":"/v1/images/8/{size}/meta",
+                      "templated":true
+                   }
+                },
+                "imageId":8,
+                "status":"downloading"
+             }
+          ]
+       }
+    }
+
+Uploading images is an asynchronous process. You provide us with urls from where the images can
+be retrieved and we download the these images when there is capacity available. Usually this
+will be pretty quick.
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'http://api.marktplaats.nl/v1/advertisements/m1000/images' \
+     -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary $'{"urls": [ "http://www.marktplaats.nl/i/common/images/marktplaats-logo.png", "http://www.marktplaats.nl/i/common/images/mensen.jpg" ], "replaceAll": true}'
+
+  .. code-block:: php
+
+    // php example goes here
+
+
+Most of the time. This is all there is to it, and at this point you can continue with
+posting other ads or buying features.
+
+But if you want to make absolutely sure that images have finished downloading before
+continuing then you can poll the individual image resources by doing a ``GET`` request to
+the image endpoint.
+
+.. code-block:: http
+
+    GET /v1/images/8 HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
+
+.. code-block:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+        "_links": {
+            "curies": [
+                {
+                    "href": "https://api.marktplaats.dev/docs/v1/rels/{rel}.html",
+                    "name": "mp",
+                    "templated": true
+                }
+            ],
+            "describedby": {
+                "href": "https://api.marktplaats.dev/docs/v1/image.html"
+            },
+            "mp:image-blob": {
+                "href": "/v1/images/8/{size}/blob",
+                "templated": true
+            },
+            "mp:image-meta": {
+                "href": "/v1/images/8/{size}/meta",
+                "templated": true
+            },
+            "self": {
+                "href": "/v1/images/8"
+            }
+        },
+        "imageId": 8,
+        "status": "available"
+    }
+
+When the status field changes from ``downloading`` to ``available`` then the image
+has been successfully downloaded and attached to the advertisement
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'http://api.marktplaats.nl/v1/images/8' \
+     -H 'Authorization: Bearer myaccesstoken'
+
+  .. code-block:: php
+
+    // php example goes here
+
 
 Step 4: Buying features
 -----------------------
@@ -402,7 +550,7 @@ marktplaats website would pay. In many cases other arrangements have been made w
 partners and these arrangements are *not* reflected in the price
 
 Let's continue and buy the ``topadvertentie``. To do this we we do a ``POST`` request
-on the features endpoint
+to the features endpoint
 
 
 .. code-block:: http
@@ -416,7 +564,7 @@ on the features endpoint
   }
 
 If the call is successful then an order will be returned and the feature is now active. It might however still take a
-few minutes before all of the features that you have bought are applied to your product
+few minutes before all of the features that you have bought are visible on the website
 
 
 .. configuration-block::
@@ -430,7 +578,7 @@ few minutes before all of the features that you have bought are applied to your 
 
   .. code-block:: php
 
-    // Configuration in PHP
+    // php example goes here
 
 
 

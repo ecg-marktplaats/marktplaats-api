@@ -142,7 +142,6 @@ the condition attribute is mandatory.</p>
 <div class="highlight-HTTP"><div class="highlight"><pre>GET /v1/categories
 Host: api.marktplaats.nl
 Authorization: Bearer myaccesstoken
-Content-Type: application/json
 </pre></div>
 </div>
 <p>The response is a JSON object with all top level categories on Marktplaats:</p>
@@ -212,7 +211,6 @@ get the attributes for that category by doing a GET request to <tt class="docuti
 <div class="highlight-HTTP"><div class="highlight"><pre>GET /v1/categories/31/35/attributes
 Host: api.marktplaats.nl
 Authorization: Bearer myaccesstoken
-Content-Type: application/json
 </pre></div>
 </div>
 <p>The result will be a list of attributes, where each attribute has the following
@@ -337,7 +335,149 @@ supported languages are Dutch and English.</p>
 </div>
 <div class="section" id="step-3-adding-images">
 <h2>Step 3: Adding images<a class="headerlink" href="#step-3-adding-images" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<p>After successfully having created an advertisement, the first thing you will usually
+want to do, is attach images to your advertisement.</p>
+<p>To do this you do a <tt class="docutils literal"><span class="pre">POST</span></tt> request to the images endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/advertisements/m1000/images</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;urls&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;http://www.marktplaats.nl/i/common/images/marktplaats-logo.png&quot;</span><span class="p">,</span> <span class="s2">&quot;http://www.marktplaats.nl/i/common/images/mensen.jpg&quot;</span> <span class="p">],</span>
+  <span class="nt">&quot;replaceAll&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">Accepted</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json;charset=UTF-8</span>
+
+<span class="p">{</span>
+   <span class="nt">&quot;_links&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;curies&quot;</span><span class="p">:[</span>
+         <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;https://api.marktplaats.dev/docs/v1/rels/{rel}.html&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;templated&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;mp&quot;</span>
+         <span class="p">}</span>
+      <span class="p">]</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;_embedded&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;mp:advertisement-image&quot;</span><span class="p">:[</span>
+         <span class="p">{</span>
+            <span class="nt">&quot;_links&quot;</span><span class="p">:{</span>
+               <span class="nt">&quot;self&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/images/7&quot;</span>
+               <span class="p">},</span>
+               <span class="nt">&quot;mp:image-blob&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/images/7/{size}/blob&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;templated&quot;</span><span class="p">:</span><span class="kc">true</span>
+               <span class="p">},</span>
+               <span class="nt">&quot;mp:image-meta&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/images/7/{size}/meta&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;templated&quot;</span><span class="p">:</span><span class="kc">true</span>
+               <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;imageId&quot;</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span>
+            <span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="s2">&quot;downloading&quot;</span>
+         <span class="p">},</span>
+         <span class="p">{</span>
+            <span class="nt">&quot;_links&quot;</span><span class="p">:{</span>
+               <span class="nt">&quot;self&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/images/8&quot;</span>
+               <span class="p">},</span>
+               <span class="nt">&quot;mp:image-blob&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/images/8/{size}/blob&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;templated&quot;</span><span class="p">:</span><span class="kc">true</span>
+               <span class="p">},</span>
+               <span class="nt">&quot;mp:image-meta&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/images/8/{size}/meta&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;templated&quot;</span><span class="p">:</span><span class="kc">true</span>
+               <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;imageId&quot;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span>
+            <span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="s2">&quot;downloading&quot;</span>
+         <span class="p">}</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Uploading images is an asynchronous process. You provide us with urls from where the images can
+be retrieved and we download the these images when there is capacity available. Usually this
+will be pretty quick.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl &#39;http://api.marktplaats.nl/v1/advertisements/m1000/images&#39; \
+ -H &#39;Authorization: Bearer myaccesstoken&#39; \
+ -H &#39;Content-Type: application/json&#39; \
+ --data-binary $&#39;{&quot;urls&quot;: [ &quot;http://www.marktplaats.nl/i/common/images/marktplaats-logo.png&quot;, &quot;http://www.marktplaats.nl/i/common/images/mensen.jpg&quot; ], &quot;replaceAll&quot;: true}&#39;
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>Most of the time. This is all there is to it, and at this point you can continue with
+posting other ads or buying features.</p>
+<p>But if you want to make absolutely sure that images have finished downloading before
+continuing then you can poll the individual image resources by doing a <tt class="docutils literal"><span class="pre">GET</span></tt> request to
+the image endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/v1/images/8</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
+</pre></div>
+</div>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;curies&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.marktplaats.dev/docs/v1/rels/{rel}.html&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mp&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;describedby&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.marktplaats.dev/docs/v1/image.html&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;mp:image-blob&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/images/8/{size}/blob&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;mp:image-meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/images/8/{size}/meta&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/images/8&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;imageId&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;available&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When the status field changes from <tt class="docutils literal"><span class="pre">downloading</span></tt> to <tt class="docutils literal"><span class="pre">available</span></tt> then the image
+has been successfully downloaded and attached to the advertisement</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl &#39;http://api.marktplaats.nl/v1/images/8&#39; \
+ -H &#39;Authorization: Bearer myaccesstoken&#39;
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="step-4-buying-features">
 <h2>Step 4: Buying features<a class="headerlink" href="#step-4-buying-features" title="Permalink to this headline">¶</a></h2>
@@ -475,7 +615,7 @@ the active field is set to true.</p>
 marktplaats website would pay. In many cases other arrangements have been made with api
 partners and these arrangements are <em>not</em> reflected in the price</p>
 <p>Let&#8217;s continue and buy the <tt class="docutils literal"><span class="pre">topadvertentie</span></tt>. To do this we we do a <tt class="docutils literal"><span class="pre">POST</span></tt> request
-on the features endpoint</p>
+to the features endpoint</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/advertisements/m1000/features/topadvertentie/buy-feature</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -486,7 +626,7 @@ on the features endpoint</p>
 </pre></div>
 </div>
 <p>If the call is successful then an order will be returned and the feature is now active. It might however still take a
-few minutes before all of the features that you have bought are applied to your product</p>
+few minutes before all of the features that you have bought are visible on the website</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl &#39;https://api.marktplaats.nl/v1/advertisements/m1000/features/topadvertentie/buy-feature&#39; \
@@ -496,7 +636,7 @@ few minutes before all of the features that you have bought are applied to your 
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// Configuration in PHP</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
 </pre></div>
 </div>
 </li>
