@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="_static/configurationblock.css" type="text/css" />
+  
     <link rel="top" title="Marktplaats API Userguide 1.0 documentation" href="index.html"/>
         <link rel="next" title="Buying User Features" href="buying-user-features.html"/>
         <link rel="prev" title="Authentication" href="authentication.html"/> 
@@ -296,7 +298,7 @@ Content-Type: application/json
 the names of the API, it would look something like this:</p>
 <div class="highlight-PHP"><div class="highlight"><pre>session_start();
 
-$apiUrl = &#39;https://api.marktplaats.dev&#39;;
+$apiUrl = &#39;https://api.marktplaats.nl&#39;;
 $accessToken = $_SESSION[&#39;access_token&#39;];
 
 $l1id=$_GET[&#39;l1id&#39;];
@@ -339,7 +341,167 @@ supported languages are Dutch and English.</p>
 </div>
 <div class="section" id="step-4-buying-features">
 <h2>Step 4: Buying features<a class="headerlink" href="#step-4-buying-features" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<p>After successfully creating an advertisement it becomes possible to purchase
+features that make your advertisement stand out.</p>
+<p>To get all list of all features that can be bought for an advertisement we do a
+GET request on the features endpoint</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/v1/advertisements/m1000/features</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
+</pre></div>
+</div>
+<p>The response is a JSON object that lists all possible features for an advertisement</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;curies&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.marktplaats.nl/docs/v1/rels/{rel}.html&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mp&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;_embedded&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;mp:advertisement-feature&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/fotoknaller&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;mp:buy-advertisement-feature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/fotoknaller/buy-feature&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;fotoknaller&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/url&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">900</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">true</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/dagtopper&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;mp:buy-advertisement-feature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/dagtopper/buy-feature&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;dagtopper&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">151</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/omhoogplaatsen&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;mp:buy-advertisement-feature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/omhoogplaatsen/buy-feature&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;omhoogplaatsen&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">130</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/topadvertentie&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;mp:buy-advertisement-feature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/topadvertentie/buy-feature&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;topadvertentie&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">1100</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/videoopvaller&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;videoopvaller&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">105</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/blikvanger&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;mp:buy-advertisement-feature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/advertisements/m1000/features/blikvanger/buy-feature&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;blikvanger&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">4500</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the available field of an embedded feature is set to true, this feature is available
+for purchase. If we look at the example output above you can see that the
+<tt class="docutils literal"><span class="pre">topadvertentie</span></tt> feature is available but the <tt class="docutils literal"><span class="pre">url</span></tt> feature is not. In this case the
+<tt class="docutils literal"><span class="pre">url</span></tt> feature is unavailable because it has already been bought. We know this because
+the active field is set to true.</p>
+<p>It is worth noting that the prices (in cents) are the prices that users of the
+marktplaats website would pay. In many cases other arrangements have been made with api
+partners and these arrangements are <em>not</em> reflected in the price</p>
+<p>Let&#8217;s continue and buy the <tt class="docutils literal"><span class="pre">topadvertentie</span></tt>. To do this we we do a <tt class="docutils literal"><span class="pre">POST</span></tt> request
+on the features endpoint</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/advertisements/m1000/features/topadvertentie/buy-feature</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;pay&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the call is successful then an order will be returned and the feature is now active. It might however still take a
+few minutes before all of the features that you have bought are applied to your product</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl &#39;https://api.marktplaats.nl/v1/advertisements/m1000/features/topadvertentie/buy-feature&#39; \
+ -H &#39;Authorization: Bearer myaccesstoken&#39; \
+ -H &#39;Content-Type: application/json&#39; \
+ --data-binary &#39;{ &quot;pay&quot;:true }&#39;
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// Configuration in PHP</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="step-5-updating-the-advertisement">
 <h2>Step 5: Updating the advertisement<a class="headerlink" href="#step-5-updating-the-advertisement" title="Permalink to this headline">¶</a></h2>
@@ -392,9 +554,7 @@ supported languages are Dutch and English.</p>
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="_static/configurationblock.js"></script>
 
   
 
