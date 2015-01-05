@@ -588,9 +588,10 @@ Step 5: Updating the advertisement
 ----------------------------------
 
 It is possible to change an advertisement after it has been created. However not all properties of an advertisement are
-updatable, even when these same attributes where editable on creation. So be sure to look at the category attributes
-(step 1 of this guide) before attempting to update a property. Only attributes that are marked as updateable can be
-changed.
+updatable, even when these same properties where editable on creation. So be sure to look both at the advertisement
+`attributes documentation in the reference documentation <http://api.marktplaats.dev/docs/v1/advertisement.html#attributes-optional-fields>`_
+and at the category attributes (see step 1 of this guide) before attempting to update a property.
+Only attributes that are marked as updateable can be changed.
 
 An advertisement can be updated in two different ways. You can do a full update, by
 performing a ``PUT`` request, or a partial update, by doing a ``PATCH`` request against the advertisement endpoint
@@ -689,6 +690,24 @@ Lets quickly take a look at what a request for updating just the title of an adv
 Step 6: Removing an advertisement
 ---------------------------------
 
+Removing an advertisement is straightforward. You simply do a ``DELETE`` request against the advertisement endpoint.
+No Request body is required
+
+.. code-block:: http
+
+  DELETE /v1/advertisements/m1000 HTTP/1.1
+  Host: api.marktplaats.nl
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/advertisements/m1000' \
+     -X DELETE -H 'Authorization: Bearer myaccesstoken'
+
+  .. code-block:: php
+
+    // php example goes here
 
 
 

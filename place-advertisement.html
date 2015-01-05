@@ -646,9 +646,10 @@ few minutes before all of the features that you have bought are visible on the w
 <div class="section" id="step-5-updating-the-advertisement">
 <h2>Step 5: Updating the advertisement<a class="headerlink" href="#step-5-updating-the-advertisement" title="Permalink to this headline">¶</a></h2>
 <p>It is possible to change an advertisement after it has been created. However not all properties of an advertisement are
-updatable, even when these same attributes where editable on creation. So be sure to look at the category attributes
-(step 1 of this guide) before attempting to update a property. Only attributes that are marked as updateable can be
-changed.</p>
+updatable, even when these same properties where editable on creation. So be sure to look both at the advertisement
+<a class="reference external" href="http://api.marktplaats.dev/docs/v1/advertisement.html#attributes-optional-fields">attributes documentation in the reference documentation</a>
+and at the category attributes (see step 1 of this guide) before attempting to update a property.
+Only attributes that are marked as updateable can be changed.</p>
 <p>An advertisement can be updated in two different ways. You can do a full update, by
 performing a <tt class="docutils literal"><span class="pre">PUT</span></tt> request, or a partial update, by doing a <tt class="docutils literal"><span class="pre">PATCH</span></tt> request against the advertisement endpoint</p>
 <p>Lets demonstrate a the former case first.</p>
@@ -740,6 +741,25 @@ Content-Type: application/json-patch+json
 </div>
 <div class="section" id="step-6-removing-an-advertisement">
 <h2>Step 6: Removing an advertisement<a class="headerlink" href="#step-6-removing-an-advertisement" title="Permalink to this headline">¶</a></h2>
+<p>Removing an advertisement is straightforward. You simply do a <tt class="docutils literal"><span class="pre">DELETE</span></tt> request against the advertisement endpoint.
+No Request body is required</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/v1/advertisements/m1000</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+</pre></div>
+</div>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39;</span> <span class="se">\</span>
+ -X DELETE -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 <p>This concludes the placing an advertisement section of this guide. We&#8217;ve showed you how to place an advertisement,
 attach images, purchase features, update an advertisement and finally how to remove your advertisement.
 In the next section we will describe how</p>
