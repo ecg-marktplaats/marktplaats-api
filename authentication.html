@@ -75,6 +75,7 @@
 <li class="toctree-l2"><a class="reference internal" href="place-advertisement.html#step-3-adding-images">Step 3: Adding images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="place-advertisement.html#step-4-buying-features">Step 4: Buying features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="place-advertisement.html#step-5-updating-the-advertisement">Step 5: Updating the advertisement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="place-advertisement.html#step-6-removing-an-advertisement">Step 6: Removing an advertisement</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="buying-user-features.html">Buying User Features</a></li>
@@ -144,7 +145,7 @@ parameters. <tt class="docutils literal"><span class="pre">authorizationUrl</spa
 while <tt class="docutils literal"><span class="pre">accessTokenUrl</span></tt> is the URL which is used to retrieve the <em>access_token</em>. These URL
 for our production site are respectively <tt class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/authorize</span></tt>
 and <tt class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/token</span></tt></p>
-<div class="highlight-PHP"><div class="highlight"><pre>.. literalinclude:: ../phpexample/authenticate.php
+<div class="highlight-PHP"><div class="highlight"><pre><span class="o">..</span> <span class="nx">literalinclude</span><span class="o">::</span> <span class="o">../</span><span class="nx">phpexample</span><span class="o">/</span><span class="nx">authenticate</span><span class="o">.</span><span class="nx">php</span>
 </pre></div>
 </div>
 <p>After performing this step, the user will see a login page (in case he is not yet
@@ -167,38 +168,38 @@ to the provided <em>redirect_uri</em>, which is in our case <tt class="docutils 
 with the <tt class="docutils literal"><span class="pre">code</span></tt> as a parameter, which contains the <em>authorization_code</em> to be used to
 retrieve the access_token. Our next task is to handle this redirect and retrieve
 the <em>access_token</em> using the provided <tt class="docutils literal"><span class="pre">code</span></tt>.</p>
-<div class="highlight-PHP"><div class="highlight"><pre>session_start();
-$authcode = $_GET[&#39;code&#39;];
-$state = $_GET[&#39;state&#39;];
+<div class="highlight-PHP"><div class="highlight"><pre><span class="nb">session_start</span><span class="p">();</span>
+<span class="nv">$authcode</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">];</span>
+<span class="nv">$state</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>This starts the PHP session, and stores the provided <tt class="docutils literal"><span class="pre">code</span></tt> in the variable
 <tt class="docutils literal"><span class="pre">$authcode</span></tt> as well as the <tt class="docutils literal"><span class="pre">state</span></tt> parameter.</p>
-<div class="highlight-PHP"><div class="highlight"><pre>$clientId = $_SESSION[&#39;clientId&#39;];
-$clientSecret = $_SESSION[&#39;clientSecret&#39;];
-$accessTokenUrl = $_SESSION[&#39;accessTokenUrl&#39;];
-$redirectUri = $_SESSION[&#39;redirectUri&#39;];
+<div class="highlight-PHP"><div class="highlight"><pre><span class="nv">$clientId</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;clientId&#39;</span><span class="p">];</span>
+<span class="nv">$clientSecret</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;clientSecret&#39;</span><span class="p">];</span>
+<span class="nv">$accessTokenUrl</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;accessTokenUrl&#39;</span><span class="p">];</span>
+<span class="nv">$redirectUri</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;redirectUri&#39;</span><span class="p">];</span>
 
 
-$params = &quot;grant_type=authorization_code&amp;code=$authcode&amp;redirect_uri=$redirectUri&amp;client_id=$clientId&amp;client_secret=$clientSecret&quot;;
+<span class="nv">$params</span> <span class="o">=</span> <span class="s2">&quot;grant_type=authorization_code&amp;code=</span><span class="si">$authcode</span><span class="s2">&amp;redirect_uri=</span><span class="si">$redirectUri</span><span class="s2">&amp;client_id=</span><span class="si">$clientId</span><span class="s2">&amp;client_secret=</span><span class="si">$clientSecret</span><span class="s2">&quot;</span><span class="p">;</span>
 
-$opts = array(&#39;http&#39; =&gt;
-array(
-&#39;method&#39;  =&gt; &#39;POST&#39;,
-&#39;header&#39;  =&gt; &quot;Content-Type: application/json&quot;,
-&#39;timeout&#39; =&gt; 60
-)
-);
+<span class="nv">$opts</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;http&#39;</span> <span class="o">=&gt;</span>
+<span class="k">array</span><span class="p">(</span>
+<span class="s1">&#39;method&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="s1">&#39;header&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Content-Type: application/json&quot;</span><span class="p">,</span>
+<span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">60</span>
+<span class="p">)</span>
+<span class="p">);</span>
 
-//echo $params;
+<span class="c1">//echo $params;</span>
 
-$context = stream_context_create($opts);
-$result = file_get_contents($accessTokenUrl . &quot;?$params&quot;, false, $context, -1, 40000);
-$jsonresult = json_decode($result);
-$_SESSION[&#39;access_token&#39;] = $jsonresult-&gt;access_token;
-$_SESSION[&#39;refresh_token&#39;] = $jsonresult-&gt;refresh_token;
+<span class="nv">$context</span> <span class="o">=</span> <span class="nb">stream_context_create</span><span class="p">(</span><span class="nv">$opts</span><span class="p">);</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$accessTokenUrl</span> <span class="o">.</span> <span class="s2">&quot;?</span><span class="si">$params</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40000</span><span class="p">);</span>
+<span class="nv">$jsonresult</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$jsonresult</span><span class="o">-&gt;</span><span class="na">access_token</span><span class="p">;</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;refresh_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$jsonresult</span><span class="o">-&gt;</span><span class="na">refresh_token</span><span class="p">;</span>
 
-header(&quot;Location: index.php&quot;);
+<span class="nx">header</span><span class="p">(</span><span class="s2">&quot;Location: index.php&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>With the received <em>authorization_code</em> in the <tt class="docutils literal"><span class="pre">code</span></tt> parameter, and the data
@@ -207,19 +208,19 @@ which we stored in the session (which is the <em>client_id</em>, <em>client_secr
 <em>access_token</em>. For this, we construct the parameters for the request and do a
 POST request to the <em>access token url</em>.</p>
 <p>The POST request sent to the server looks like this:</p>
-<div class="highlight-HTTP"><div class="highlight"><pre>POST /accounts/oauth/token?grant_type=authorization_code&amp;code=akAS72shjuqeah382&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret
-Host: auth.marktplaats.nl
+<div class="highlight-HTTP"><div class="highlight"><pre><span class="err">POST /accounts/oauth/token?grant_type=authorization_code&amp;code=akAS72shjuqeah382&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret</span>
+<span class="err">Host: auth.marktplaats.nl</span>
 </pre></div>
 </div>
 <p>The result of this POST request should be
 a <em>200 OK</em>, and a JSON object in the body which looks like this:</p>
-<div class="highlight-JSON"><div class="highlight"><pre>{
-  &quot;access_token&quot;:&quot;d79b4761-2268-4f03-a068-01eb26b3c7d2&quot;,
-  &quot;token_type&quot;:&quot;Bearer&quot;,
-  &quot;expires_in&quot;:43199,
-  &quot;refresh_token&quot;:&quot;d5bd2dcf-1219-4b65-aacc-86149ba55fb0&quot;,
-  &quot;scope&quot;:&quot;read,write&quot;
-}
+<div class="highlight-JSON"><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;access_token&quot;</span><span class="p">:</span><span class="s2">&quot;d79b4761-2268-4f03-a068-01eb26b3c7d2&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;token_type&quot;</span><span class="p">:</span><span class="s2">&quot;Bearer&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;expires_in&quot;</span><span class="p">:</span><span class="mi">43199</span><span class="p">,</span>
+  <span class="nt">&quot;refresh_token&quot;</span><span class="p">:</span><span class="s2">&quot;d5bd2dcf-1219-4b65-aacc-86149ba55fb0&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="s2">&quot;read,write&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>You need to store the returned <em>access_token</em> and <em>refresh_token</em>, so you can reuse
@@ -233,35 +234,35 @@ after 24 hours. The <em>refresh_token</em> will not expire and as such is crucia
 process of giving your users an unutrusive experience.</p>
 <p>To get a new access token you need to do a HTTP POST request to the token endpoint.
 This is very similar to obtaining the access token:</p>
-<div class="highlight-PHP"><div class="highlight"><pre>session_start();
+<div class="highlight-PHP"><div class="highlight"><pre><span class="nb">session_start</span><span class="p">();</span>
 
-$refreshToken = $_SESSION[&#39;refresh_token&#39;];
-$accessTokenUrl = $_SESSION[&#39;accessTokenUrl&#39;];
-$clientId = $_SESSION[&#39;clientId&#39;];
-$clientSecret = $_SESSION[&#39;clientSecret&#39;];
+<span class="nv">$refreshToken</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;refresh_token&#39;</span><span class="p">];</span>
+<span class="nv">$accessTokenUrl</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;accessTokenUrl&#39;</span><span class="p">];</span>
+<span class="nv">$clientId</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;clientId&#39;</span><span class="p">];</span>
+<span class="nv">$clientSecret</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;clientSecret&#39;</span><span class="p">];</span>
 
-$params = &quot;grant_type=refresh_token&amp;refresh_token=$refreshToken&amp;client_id=$clientId&amp;client_secret=$clientSecret&quot;;
+<span class="nv">$params</span> <span class="o">=</span> <span class="s2">&quot;grant_type=refresh_token&amp;refresh_token=</span><span class="si">$refreshToken</span><span class="s2">&amp;client_id=</span><span class="si">$clientId</span><span class="s2">&amp;client_secret=</span><span class="si">$clientSecret</span><span class="s2">&quot;</span><span class="p">;</span>
 
-$opts = array(&#39;http&#39; =&gt;
-array(
-&#39;method&#39;  =&gt; &#39;POST&#39;,
-&#39;header&#39;  =&gt; &quot;Content-Type: application/json&quot;,
-&#39;timeout&#39; =&gt; 60
-)
-);
+<span class="nv">$opts</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;http&#39;</span> <span class="o">=&gt;</span>
+<span class="k">array</span><span class="p">(</span>
+<span class="s1">&#39;method&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="s1">&#39;header&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Content-Type: application/json&quot;</span><span class="p">,</span>
+<span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">60</span>
+<span class="p">)</span>
+<span class="p">);</span>
 
-$context = stream_context_create($opts);
-$result = file_get_contents($accessTokenUrl . &quot;?$params&quot;, false, $context, -1, 40000);
-$jsonresult = json_decode($result);
-$_SESSION[&#39;access_token&#39;] = $jsonresult-&gt;access_token;
-$_SESSION[&#39;refresh_token&#39;] = $jsonresult-&gt;refresh_token;
+<span class="nv">$context</span> <span class="o">=</span> <span class="nb">stream_context_create</span><span class="p">(</span><span class="nv">$opts</span><span class="p">);</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$accessTokenUrl</span> <span class="o">.</span> <span class="s2">&quot;?</span><span class="si">$params</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40000</span><span class="p">);</span>
+<span class="nv">$jsonresult</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$jsonresult</span><span class="o">-&gt;</span><span class="na">access_token</span><span class="p">;</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;refresh_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$jsonresult</span><span class="o">-&gt;</span><span class="na">refresh_token</span><span class="p">;</span>
 
-header(&quot;Location: index.php&quot;);
+<span class="nx">header</span><span class="p">(</span><span class="s2">&quot;Location: index.php&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The http request which is done looks like this:</p>
-<div class="highlight-HTTP"><div class="highlight"><pre>POST /accounts/oauth/token?grant_type=refresh_token&amp;refresh_token=35f5fb15-9364-464a-854b-9ac0b344f108&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret
-Host: auth.marktplaats.nl
+<div class="highlight-HTTP"><div class="highlight"><pre><span class="err">POST /accounts/oauth/token?grant_type=refresh_token&amp;refresh_token=35f5fb15-9364-464a-854b-9ac0b344f108&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret</span>
+<span class="err">Host: auth.marktplaats.nl</span>
 </pre></div>
 </div>
 <p>The returned JSON object has the same structure as the one returned when requesting

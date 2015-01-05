@@ -38,15 +38,15 @@ the condition attribute is mandatory.
 To get all the categories on Marktplaats we do a GET request on the endpoint
 /v1/categories:
 
-.. code-block:: HTTP
+.. code-block:: http
 
-  GET /v1/categories
-  Host: api.marktplaats.nl
-  Authorization: Bearer myaccesstoken
+    GET /v1/categories HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
 
 The response is a JSON object with all top level categories on Marktplaats:
 
-.. code-block:: JSON
+.. code-block:: json
 
   {
     "_links": {
@@ -58,11 +58,11 @@ The response is a JSON object with all top level categories on Marktplaats:
         "templated": true
       },
       "describedby": {
-        "href": "https://api.demo.qa-mp.so/docs/v1/categories.html"
+        "href": "https://api.marktplaats.nl/docs/v1/categories.html"
       },
       "curies": [
         {
-          "href": "https://api.demo.qa-mp.so/docs/v1/rels/{rel}.html",
+          "href": "https://api.marktplaats.nl/docs/v1/rels/{rel}.html",
           "templated": true,
           "name": "mp"
         }
@@ -112,18 +112,19 @@ we can get the attributes for that category and use those to create the advertis
 For example, if we want to place an advertisement in the cd player category, we can
 get the attributes for that category by doing a GET request to ``/v1/categories/31/35/attributes``
 
-.. code-block:: HTTP
+.. code-block:: http
 
-  GET /v1/categories/31/35/attributes
-  Host: api.marktplaats.nl
-  Authorization: Bearer myaccesstoken
+    GET /v1/categories/31/35/attributes HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
+
 
 The result will be a list of attributes, where each attribute has the following
 structure:
 
-.. code-block:: JSON
+.. code-block:: json
 
-  {
+   {
     "key": "properties",
     "label": "Eigenschappen",
     "type": "LIST",
@@ -136,7 +137,7 @@ structure:
     "searchable": true,
     "writable": true,
     "updateable": true
-  },
+   }
 
 
 This attribute *properties* will be presented as *Eigenschappen* on the website,
@@ -153,7 +154,7 @@ Based on the data for the category we want to place an advertisement in, we can 
 the json required to post an advertisement. To continue with the example of a CD player,
 the JSON for a minimal advertisement should look something like this:
 
-.. code-block:: JSON
+.. code-block:: json
 
   {
     "categoryId":35,
@@ -179,30 +180,31 @@ and ``location``. All the other fields are optional: ``condition``, ``brand``,
 that the ``properties`` attribute is of the type ``LIST``, and can also contain
 a array of values instead of a single value.
 
- The JSON should be send to the Marktplaats API using a ``POST`` request:
+The JSON should be send to the Marktplaats API using a ``POST`` request:
 
- .. code-block:: HTTP
+.. code-block:: http
 
-  POST /v1/advertisements
-  Host: api.marktplaats.nl
-  Authorization: Bearer myaccesstoken
-  Content-Type: application/json
-  {
-    "categoryId":35,
-    "title":"Test cd player",
-    "description":"This is an awesome cd-player",
-    "condition":"Nieuw",
-    "brand":"Sony",
-    "properties":"Draagbaar",
-    "delivery":"Ophalen",
-    "priceModel":{
-      "modelType":"fixed",
-      "askingPrice":3241
-    },
-    "location":{
-      "postcode":"1097DN"
+    POST /v1/advertisements HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
+    Content-Type: application/json
+
+    {
+        "categoryId":35,
+        "title":"Test cd player",
+        "description":"This is an awesome cd-player",
+        "condition":"Nieuw",
+        "brand":"Sony",
+        "properties":"Draagbaar",
+        "delivery":"Ophalen",
+        "priceModel":{
+          "modelType":"fixed",
+          "askingPrice":3241
+        },
+        "location":{
+          "postcode":"1097DN"
+        }
     }
-  }
 
 If we do this in PHP, and we have a form which is containing the field names matching
 the names of the API, it would look something like this:
@@ -277,7 +279,7 @@ To do this you do a ``POST`` request to the images endpoint.
        "_links":{
           "curies":[
              {
-                "href":"https://api.marktplaats.dev/docs/v1/rels/{rel}.html",
+                "href":"https://api.marktplaats.nl/docs/v1/rels/{rel}.html",
                 "templated":true,
                 "name":"mp"
              }
@@ -363,13 +365,13 @@ the image endpoint.
         "_links": {
             "curies": [
                 {
-                    "href": "https://api.marktplaats.dev/docs/v1/rels/{rel}.html",
+                    "href": "https://api.marktplaats.nl/docs/v1/rels/{rel}.html",
                     "name": "mp",
                     "templated": true
                 }
             ],
             "describedby": {
-                "href": "https://api.marktplaats.dev/docs/v1/image.html"
+                "href": "https://api.marktplaats.nl/docs/v1/image.html"
             },
             "mp:image-blob": {
                 "href": "/v1/images/8/{size}/blob",
@@ -405,7 +407,7 @@ has been successfully downloaded and attached to the advertisement
 Step 4: Buying features
 -----------------------
 
-After successfully creating an advertisement it becomes possible to purchase
+Immediately after successfully creating an advertisement it becomes possible to purchase
 features that make your advertisement stand out.
 
 To get all list of all features that can be bought for an advertisement we do a
@@ -585,4 +587,111 @@ few minutes before all of the features that you have bought are visible on the w
 Step 5: Updating the advertisement
 ----------------------------------
 
-TODO
+It is possible to change an advertisement after it has been created. However not all properties of an advertisement are
+updatable, even when these same attributes where editable on creation. So be sure to look at the category attributes
+(step 1 of this guide) before attempting to update a property. Only attributes that are marked as updateable can be
+changed.
+
+An advertisement can be updated in two different ways. You can do a full update, by
+performing a ``PUT`` request, or a partial update, by doing a ``PATCH`` request against the advertisement endpoint
+
+Lets demonstrate a the former case first.
+
+.. code-block:: http
+
+  PUT /v1/advertisements/m1000 HTTP/1.1
+  Host: api.marktplaats.nl
+  Content-Type: application/json
+
+  {
+    "itemId": "m1000",
+    "title": "Updated title",
+    "description": "This is an awesome cd-player",
+    "categoryId": 35,
+    "priceModel": {
+      "modelType": "fixed",
+      "askingPrice": 3241
+    },
+    "location": {
+      "postcode": "1097DN",
+      "cityName": "Amsterdam"
+    },
+    "seller": {
+      "sellerId": 1,
+      "sellerName": "Robin",
+      "phoneNumber": "020-4167248",
+      "acceptPaypal": false
+    },
+    "showOnMap": false,
+    "status": "online",
+    "startDate": "2014-12-23T16:59:39Z",
+    "closeDate": "2015-01-23T16:59:39Z",
+    "condition": "Nieuw",
+    "brand": "Sony",
+    "properties": [
+      "Draagbaar"
+    ],
+    "delivery": "Ophalen"
+  }
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/advertisements/m1000' \
+     -X PUT -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary $'{\n  "itemId": "m1000",\n  "title": "Test cd player",\n  "description": "This is an awesome cd-player",\n  "categoryId": 35,\n  "priceModel": {\n    "modelType": "fixed",\n    "askingPrice": 3241\n  },\n  "location": {\n    "postcode": "1097DN",\n    "cityName": "Amsterdam"\n  },\n  "seller": {\n    "sellerId": 1,\n    "sellerName": "lalala",\n    "phoneNumber": "",\n    "acceptPaypal": false\n  },\n  "showOnMap": false,\n  "status": "deactivated",\n  "startDate": "2014-12-23T16:59:39Z",\n  "closeDate": "2015-01-23T16:59:39Z",\n  "condition": "Nieuw",\n  "brand": "Sony",\n  "properties": [\n    "Draagbaar"\n  ],\n  "delivery": "Ophalen"\n}'
+
+  .. code-block:: php
+
+    // php example goes here
+
+In the above example we overwrote all the fields all at once.
+
+In some cases you may only want to update only one or two fields, leaving the rest unchanged. In that case you could
+perform a ``PATCH`` request instead.
+The body of this ``PATCH`` request should be a JSON Patch document. JSON Patch is a standard format for describing
+changes to a JSON document. A JSON Patch document is just a JSON file containing an array of patch operations.
+The patch operations supported by JSONPatch are “add”, “remove”, “replace”, “move”, “copy” and “test”.
+The operations are applied in order; if any of them fail then the whole patch operation should abort.
+
+Covering this standard in detail is outside of the scope of this document but there is
+`extensive documentation <https://tools.ietf.org/html/rfc6902/>`_ on this format available online.
+
+Lets quickly take a look at what a request for updating just the title of an advertisement could look like.
+
+.. code-block:: http
+
+  PATCH /v1/advertisements/m1000 HTTP/1.1
+  Host: api.marktplaats.nl
+  Content-Type: application/json-patch+json
+
+  [
+    {"op":"replace", "path":"/title", "value":"the new title"}
+  ]
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/advertisements/m1000' \
+     -X PATCH -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json-patch+json' \
+     --data-binary $'[{"op":"replace", "path":"/title", "value":"the new title"}]'
+
+  .. code-block:: php
+
+    // php example goes here
+
+
+
+Step 6: Removing an advertisement
+---------------------------------
+
+
+
+
+This concludes the placing an advertisement section of this guide. We've showed you how to place an advertisement,
+attach images, purchase features, update an advertisement and finally how to remove your advertisement.
+In the next section we will describe how
