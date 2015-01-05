@@ -408,10 +408,10 @@ be retrieved and we download the these images when there is capacity available. 
 will be pretty quick.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre><span class="go">curl &#39;http://api.marktplaats.nl/v1/advertisements/m1000/images&#39; \</span>
-<span class="go"> -H &#39;Authorization: Bearer myaccesstoken&#39; \</span>
-<span class="go"> -H &#39;Content-Type: application/json&#39; \</span>
-<span class="go"> --data-binary $&#39;{&quot;urls&quot;: [ &quot;http://www.marktplaats.nl/i/common/images/marktplaats-logo.png&quot;, &quot;http://www.marktplaats.nl/i/common/images/mensen.jpg&quot; ], &quot;replaceAll&quot;: true}&#39;</span>
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;http://api.marktplaats.nl/v1/advertisements/m1000/images&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">$&#39;{&quot;urls&quot;: [ &quot;http://www.marktplaats.nl/i/common/images/marktplaats-logo.png&quot;, &quot;http://www.marktplaats.nl/i/common/images/mensen.jpg&quot; ], &quot;replaceAll&quot;: true}&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -467,8 +467,8 @@ the image endpoint.</p>
 has been successfully downloaded and attached to the advertisement</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre><span class="go">curl &#39;http://api.marktplaats.nl/v1/images/8&#39; \</span>
-<span class="go"> -H &#39;Authorization: Bearer myaccesstoken&#39;</span>
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;http://api.marktplaats.nl/v1/images/8&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -629,10 +629,10 @@ to the features endpoint</p>
 few minutes before all of the features that you have bought are visible on the website</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre><span class="go">curl &#39;https://api.marktplaats.nl/v1/advertisements/m1000/features/topadvertentie/buy-feature&#39; \</span>
-<span class="go"> -H &#39;Authorization: Bearer myaccesstoken&#39; \</span>
-<span class="go"> -H &#39;Content-Type: application/json&#39; \</span>
-<span class="go"> --data-binary &#39;{ &quot;pay&quot;:true }&#39;</span>
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000/features/topadvertentie/buy-feature&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">&#39;{ &quot;pay&quot;:true }&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -690,10 +690,10 @@ performing a <tt class="docutils literal"><span class="pre">PUT</span></tt> requ
 </div>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre><span class="go">curl &#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39; \</span>
-<span class="go"> -X PUT -H &#39;Authorization: Bearer myaccesstoken&#39; \</span>
-<span class="go"> -H &#39;Content-Type: application/json&#39; \</span>
-<span class="go"> --data-binary $&#39;{\n  &quot;itemId&quot;: &quot;m1000&quot;,\n  &quot;title&quot;: &quot;Test cd player&quot;,\n  &quot;description&quot;: &quot;This is an awesome cd-player&quot;,\n  &quot;categoryId&quot;: 35,\n  &quot;priceModel&quot;: {\n    &quot;modelType&quot;: &quot;fixed&quot;,\n    &quot;askingPrice&quot;: 3241\n  },\n  &quot;location&quot;: {\n    &quot;postcode&quot;: &quot;1097DN&quot;,\n    &quot;cityName&quot;: &quot;Amsterdam&quot;\n  },\n  &quot;seller&quot;: {\n    &quot;sellerId&quot;: 1,\n    &quot;sellerName&quot;: &quot;lalala&quot;,\n    &quot;phoneNumber&quot;: &quot;&quot;,\n    &quot;acceptPaypal&quot;: false\n  },\n  &quot;showOnMap&quot;: false,\n  &quot;status&quot;: &quot;deactivated&quot;,\n  &quot;startDate&quot;: &quot;2014-12-23T16:59:39Z&quot;,\n  &quot;closeDate&quot;: &quot;2015-01-23T16:59:39Z&quot;,\n  &quot;condition&quot;: &quot;Nieuw&quot;,\n  &quot;brand&quot;: &quot;Sony&quot;,\n  &quot;properties&quot;: [\n    &quot;Draagbaar&quot;\n  ],\n  &quot;delivery&quot;: &quot;Ophalen&quot;\n}&#39;</span>
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39;</span> <span class="se">\</span>
+ -X PUT -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">$&#39;{\n  &quot;itemId&quot;: &quot;m1000&quot;,\n  &quot;title&quot;: &quot;Test cd player&quot;,\n  &quot;description&quot;: &quot;This is an awesome cd-player&quot;,\n  &quot;categoryId&quot;: 35,\n  &quot;priceModel&quot;: {\n    &quot;modelType&quot;: &quot;fixed&quot;,\n    &quot;askingPrice&quot;: 3241\n  },\n  &quot;location&quot;: {\n    &quot;postcode&quot;: &quot;1097DN&quot;,\n    &quot;cityName&quot;: &quot;Amsterdam&quot;\n  },\n  &quot;seller&quot;: {\n    &quot;sellerId&quot;: 1,\n    &quot;sellerName&quot;: &quot;lalala&quot;,\n    &quot;phoneNumber&quot;: &quot;&quot;,\n    &quot;acceptPaypal&quot;: false\n  },\n  &quot;showOnMap&quot;: false,\n  &quot;status&quot;: &quot;deactivated&quot;,\n  &quot;startDate&quot;: &quot;2014-12-23T16:59:39Z&quot;,\n  &quot;closeDate&quot;: &quot;2015-01-23T16:59:39Z&quot;,\n  &quot;condition&quot;: &quot;Nieuw&quot;,\n  &quot;brand&quot;: &quot;Sony&quot;,\n  &quot;properties&quot;: [\n    &quot;Draagbaar&quot;\n  ],\n  &quot;delivery&quot;: &quot;Ophalen&quot;\n}&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -724,10 +724,10 @@ Content-Type: application/json-patch+json
 </div>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre><span class="go">curl &#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39; \</span>
-<span class="go"> -X PATCH -H &#39;Authorization: Bearer myaccesstoken&#39; \</span>
-<span class="go"> -H &#39;Content-Type: application/json-patch+json&#39; \</span>
-<span class="go"> --data-binary $&#39;[{&quot;op&quot;:&quot;replace&quot;, &quot;path&quot;:&quot;/title&quot;, &quot;value&quot;:&quot;the new title&quot;}]&#39;</span>
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39;</span> <span class="se">\</span>
+ -X PATCH -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json-patch+json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">$&#39;[{&quot;op&quot;:&quot;replace&quot;, &quot;path&quot;:&quot;/title&quot;, &quot;value&quot;:&quot;the new title&quot;}]&#39;</span>
 </pre></div>
 </div>
 </li>
