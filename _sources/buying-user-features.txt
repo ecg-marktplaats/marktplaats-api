@@ -2,7 +2,390 @@
 
 .. _buying_user_features:
 
-Buying User Features
-====================
 
-TODO
+Buy User Features
+=================
+
+After successfully creating and confirming a user account it becomes possible to purchase user features.
+The available features are *klantscore* and *bedrijfsprofilering*.
+
+The *bedrijfsprofilering* feature will allow the user to enhance his seller profile page with description, video url,
+background image and other such elements, not available for regular users.
+
+The *klantscore* feature is currently only supported for dealers. It allows the fetch of user reviews from external
+platforms such as tevreden.nl or klantenvertellen.nl and their display on Marktplaats on the seller profile and advertisement pages.
+
+This guide will show you how to buy these user features.
+
+In the examples below we will use the *access_token* ``myaccesstoken`` to illustrate that
+in that place the *access_token* should be filled in.
+
+The full PHP example of which snippets are used in this guide can be found in this
+repository in the directory ``/phpexample``.
+
+
+Prerequisites
+-------------
+
+You need to have an *access_token* which can be used to authenticate the request
+to the API. See :ref:`authentication` on how to get such a token.
+
+Find the available user features that can be bought
+---------------------------------------------------
+
+To get the list of all the features that can be bought for a user we do a
+GET request on the *features* endpoint.
+
+.. code-block:: http
+
+    GET /v1/users/1/features HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
+
+The response is a JSON object that lists all possible features for a user.
+
+.. code-block:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+      "_links": {
+        "self": {
+          "href": "/v1/users/1/features"
+        },
+        "curies": [
+          {
+            "href": "https://api.marktplaats.nl/docs/v1/rels/{rel}.html",
+            "templated": true,
+            "name": "mp"
+          }
+        ]
+      },
+      "_embedded": {
+        "mp:user-feature": [
+          {
+            "_links": {
+              "self": {
+                "href": "/v1/users/1/features/bedrijfsprofilering"
+              },
+              "mp:buy-user-feature": {
+                "href": "/v1/users/1/features/bedrijfsprofilering/buy-feature"
+              }
+            },
+            "name": "bedrijfsprofilering",
+            "price": 1234,
+            "available": true,
+            "active": false
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "/v1/users/1/features/klantscore"
+              },
+              "mp:buy-user-feature": {
+                "href": "/v1/users/1/features/klantscore/buy-feature"
+              }
+            },
+            "name": "klantscore",
+            "price": 5678,
+            "available": false,
+            "active": true
+          }
+        ]
+      }
+    }
+
+If the *available* field of an embedded user feature is set to true, this feature is available
+for purchase. If we look at the example output above you can see that the
+``bedrijfsprofilering`` feature is available, but the ``klantscore`` feature is not. In this case the
+``klantscore`` feature is unavailable because it has already been bought. We know this because
+the *active* field is set to true.
+
+Buy feature to enhance the user profile
+---------------------------------------
+
+TODO add image to show the benefit !!!
+
+In order to enhance your seller profile page with description, video url, background image and other such elements,
+not available for regular users, the *bedrijfsprofilering* feature has to be purchased.
+
+To buy this feature we do a ``POST`` request against the *features* endpoint.
+
+.. code-block:: http
+
+    POST /v1/users/1/features/bedrijfsprofilering/buy-feature HTTP/1.1
+    Host: api.marktplaats.nl
+    Content-Type: application/json
+
+    {
+        "pay": true
+    }
+
+If the call is successful then an order will be returned and the feature is now active. It might however still take a
+few minutes before the feature is visible on the website.
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/users/1/features/bedrijfsprofilering/buy-feature' \
+     -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary '{ "pay":true }'
+
+  .. code-block:: php
+
+    // php example goes here
+
+After the *bedrijfsprofilering* feature has been bought, you can enhance your user profile with additional elements
+such as description, video url, background image and more.
+
+To retrieve the existing user profile we do a GET request on the *profile* endpoint.
+
+.. code-block:: http
+
+    GET /v1/users/1/profile HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
+
+The response is a JSON object that contains the user profile data.
+
+.. code-block:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+     "_links":{
+       "self":{
+         "href":"/v1/users/1/profile"
+       },
+       "describedby":{
+         "href":"https://api.marktplaats.nl/docs/v1/user-profile.html"
+       },
+       "mp:backdrop-image": {
+         "href":"/v1/users/1/profile/backdrop-image"
+       },
+       "mp:profile-image": {
+         "href":"/v1/users/1/profile/profile-image"
+       }
+     },
+     "_embedded": {
+       "mp:backdrop-image": {
+         "_links": {
+           "self": {
+             "href": "/v1/users/1/profile/backdrop-image"
+           },
+           "mp:image-blob": {
+             "href": "/v1/images/{size}/blob",
+             "templated": true
+           },
+           "mp:image-meta": {
+             "href": "/v1/images/{size}/meta",
+             "templated": true
+           }
+         },
+         "imageId": 1,
+         "status": "available"
+       },
+       "mp:profile-image": {
+         "_links": {
+           "self": {
+             "href": "/v1/users/1/profile/profile-image"
+           },
+           "mp:image-blob": {
+             "href": "/v1/images/2/{size}/blob",
+             "templated": true
+           },
+           "mp:image-meta": {
+             "href": "/v1/images/2/{size}/meta",
+             "templated": true
+           }
+         },
+         "imageId": 2,
+         "status": "available"
+       }
+     },
+     "title": "Super shop",
+     "description": "Better than all the rest",
+     "videoUrl": "some"
+    }
+
+For updating the title, description and/or video url of the user profile a ``PUT`` request has to be done against the *profile* endpoint.
+
+TODO explain video upload process !!!
+
+.. code-block:: http
+
+    PUT /v1/users/1/profile HTTP/1.1
+    Host: api.marktplaats.nl
+    Content-Type: application/json
+
+    {
+        "title": "Super shop",
+        "description": "Better than all the rest",
+        "videoUrl": "some"
+    }
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/users/1/profile' \
+     -X PUT -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary '{ "title":"Super shop","super description":"Better than all the rest","videoUrl":"super video url" }'
+
+  .. code-block:: php
+
+    // php example goes here
+
+For updating the profile image of the user profile a ``POST`` request has to be done against the *profile-image* resource.
+
+.. code-block:: http
+
+    POST /v1/users/1/profile/profile-image HTTP/1.1
+    Host: api.marktplaats.nl
+    Content-Type: application/json
+
+    {
+      "url": "http://remote.host/images/image1.jpg"
+    }
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/users/1/profile/profile-image' \
+     -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary '{ "url":"http://remote.host/images/image1.jpg" }'
+
+  .. code-block:: php
+
+    // php example goes here
+
+For updating the backdrop image of the user profile a ``POST`` request has to be done against the *backdrop-image* resource.
+
+.. code-block:: http
+
+    POST /v1/users/1/profile/backdrop-image HTTP/1.1
+    Host: api.marktplaats.nl
+    Content-Type: application/json
+
+    {
+      "url": "http://remote.host/images/image1.jpg"
+    }
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/users/1/profile/backdrop-image' \
+     -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary '{ "url":"http://remote.host/images/image1.jpg" }'
+
+  .. code-block:: php
+
+    // php example goes here
+
+Buy feature to display user reviews
+-----------------------------------
+
+TODO add image to show the benefit !!!
+
+In order to allow the fetch of user reviews from external platforms such as tevreden.nl or klantenvertellen.nl
+and their display on Marktplaats on the seller profile page and advertisement pages, the *klantscore* feature
+has to be bought.
+
+This is currently only supported for dealers.
+
+To buy this feature we do a ``POST`` request against the *features* endpoint.
+
+.. code-block:: http
+
+    POST /v1/users/1/features/klantscore/buy-feature HTTP/1.1
+    Host: api.marktplaats.nl
+    Content-Type: application/json
+
+    {
+        "pay": true
+    }
+
+If the call is successful then an order will be returned and the feature is now active. It might however still take a
+few minutes before the feature is visible on the website.
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/users/1/features/klantscore/buy-feature' \
+     -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary '{ "pay":true }'
+
+  .. code-block:: php
+
+    // php example goes here
+
+
+After the *klantscore* feature has been bought, you can change the settings needed for configuring
+the external platform from which the user reviews will be fetched and displayed on Marktplaats.
+
+To get the existing user reviews settings we do a GET request on the *userreviews* endpoint.
+
+.. code-block:: http
+
+    GET /v1/users/1/userreviews HTTP/1.1
+    Host: api.marktplaats.nl
+    Authorization: Bearer myaccesstoken
+
+The response is a JSON object that contains the current user reviews settings.
+The *reviewsPlatform* field references the external platform used to fetch the user reviews from,
+while the *reviewsUser* field represents the user id of the dealer on that platform.
+
+.. code-block:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+     "_links": {
+       "self": {
+         "href":"/v1/users/1/userreviews"
+       },
+       "describedby": {
+         "href":"https://api.marktplaats.nl/docs/v1/user-reviews.html"
+       },
+     },
+     "reviewsPlatform": "tevreden",
+     "reviewsUser": "handyHarry"
+    }
+
+The user reviews settings can be updated by performing a ``PUT`` request against the *userreviews* endpoint.
+
+.. code-block:: http
+
+    PUT /v1/users/1/userreviews HTTP/1.1
+    Host: api.marktplaats.nl
+    Content-Type: application/json
+
+    {
+        "reviewsPlatform": "tevreden",
+        "reviewsUser": "handyHarry"
+    }
+
+.. configuration-block::
+
+  .. code-block:: curl
+
+    curl 'https://api.marktplaats.nl/v1/users/1/userreviews' \
+     -X PUT -H 'Authorization: Bearer myaccesstoken' \
+     -H 'Content-Type: application/json' \
+     --data-binary '{ "reviewsPlatform":"tevreden","reviewsUser":"handyHarry" }'
+
+  .. code-block:: php
+
+    // php example goes here

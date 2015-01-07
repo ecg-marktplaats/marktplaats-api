@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Buying User Features &mdash; Marktplaats API Userguide 1.0 documentation</title>
+  <title>Buy User Features &mdash; Marktplaats API Userguide 1.0 documentation</title>
   
 
   
@@ -77,7 +77,13 @@
 <li class="toctree-l2"><a class="reference internal" href="place-advertisement.html#step-6-removing-an-advertisement">Step 6: Removing an advertisement</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Buying User Features</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Buy User Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#find-the-available-user-features-that-can-be-bought">Find the available user features that can be bought</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#buy-feature-to-enhance-the-user-profile">Buy feature to enhance the user profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#buy-feature-to-display-user-reviews">Buy feature to display user reviews</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -101,7 +107,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Buying User Features</li>
+    <li>Buy User Features</li>
       <li class="wy-breadcrumbs-aside">
         
           <a href="_sources/buying-user-features.txt" rel="nofollow"> View page source</a>
@@ -112,9 +118,360 @@
 </div>
           <div role="main">
             
-  <div class="section" id="buying-user-features">
-<span id="index-0"></span><span id="id1"></span><h1>Buying User Features<a class="headerlink" href="#buying-user-features" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
+  <div class="section" id="buy-user-features">
+<span id="buying-user-features"></span><span id="index-0"></span><h1>Buy User Features<a class="headerlink" href="#buy-user-features" title="Permalink to this headline">¶</a></h1>
+<p>After successfully creating and confirming a user account it becomes possible to purchase user features.
+The available features are <em>klantscore</em> and <em>bedrijfsprofilering</em>.</p>
+<p>The <em>bedrijfsprofilering</em> feature will allow the user to enhance his seller profile page with description, video url,
+background image and other such elements, not available for regular users.</p>
+<p>The <em>klantscore</em> feature is currently only supported for dealers. It allows the fetch of user reviews from external
+platforms such as tevreden.nl or klantenvertellen.nl and their display on Marktplaats on the seller profile and advertisement pages.</p>
+<p>This guide will show you how to buy these user features.</p>
+<p>In the examples below we will use the <em>access_token</em> <tt class="docutils literal"><span class="pre">myaccesstoken</span></tt> to illustrate that
+in that place the <em>access_token</em> should be filled in.</p>
+<p>The full PHP example of which snippets are used in this guide can be found in this
+repository in the directory <tt class="docutils literal"><span class="pre">/phpexample</span></tt>.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>You need to have an <em>access_token</em> which can be used to authenticate the request
+to the API. See <a class="reference internal" href="authentication.html#authentication"><em>Authentication</em></a> on how to get such a token.</p>
+</div>
+<div class="section" id="find-the-available-user-features-that-can-be-bought">
+<h2>Find the available user features that can be bought<a class="headerlink" href="#find-the-available-user-features-that-can-be-bought" title="Permalink to this headline">¶</a></h2>
+<p>To get the list of all the features that can be bought for a user we do a
+GET request on the <em>features</em> endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/v1/users/1/features</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
+</pre></div>
+</div>
+<p>The response is a JSON object that lists all possible features for a user.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/users/1/features&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;curies&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.marktplaats.nl/docs/v1/rels/{rel}.html&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mp&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;_embedded&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;mp:user-feature&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/users/1/features/bedrijfsprofilering&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;mp:buy-user-feature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/users/1/features/bedrijfsprofilering/buy-feature&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bedrijfsprofilering&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/users/1/features/klantscore&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;mp:buy-user-feature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/users/1/features/klantscore/buy-feature&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;klantscore&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">5678</span><span class="p">,</span>
+        <span class="nt">&quot;available&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;active&quot;</span><span class="p">:</span> <span class="kc">true</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the <em>available</em> field of an embedded user feature is set to true, this feature is available
+for purchase. If we look at the example output above you can see that the
+<tt class="docutils literal"><span class="pre">bedrijfsprofilering</span></tt> feature is available, but the <tt class="docutils literal"><span class="pre">klantscore</span></tt> feature is not. In this case the
+<tt class="docutils literal"><span class="pre">klantscore</span></tt> feature is unavailable because it has already been bought. We know this because
+the <em>active</em> field is set to true.</p>
+</div>
+<div class="section" id="buy-feature-to-enhance-the-user-profile">
+<h2>Buy feature to enhance the user profile<a class="headerlink" href="#buy-feature-to-enhance-the-user-profile" title="Permalink to this headline">¶</a></h2>
+<p>TODO add image to show the benefit !!!</p>
+<p>In order to enhance your seller profile page with description, video url, background image and other such elements,
+not available for regular users, the <em>bedrijfsprofilering</em> feature has to be purchased.</p>
+<p>To buy this feature we do a <tt class="docutils literal"><span class="pre">POST</span></tt> request against the <em>features</em> endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/users/1/features/bedrijfsprofilering/buy-feature</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;pay&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the call is successful then an order will be returned and the feature is now active. It might however still take a
+few minutes before the feature is visible on the website.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/users/1/features/bedrijfsprofilering/buy-feature&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">&#39;{ &quot;pay&quot;:true }&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>After the <em>bedrijfsprofilering</em> feature has been bought, you can enhance your user profile with additional elements
+such as description, video url, background image and more.</p>
+<p>To retrieve the existing user profile we do a GET request on the <em>profile</em> endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/v1/users/1/profile</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
+</pre></div>
+</div>
+<p>The response is a JSON object that contains the user profile data.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+ <span class="nt">&quot;_links&quot;</span><span class="p">:{</span>
+   <span class="nt">&quot;self&quot;</span><span class="p">:{</span>
+     <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/users/1/profile&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;describedby&quot;</span><span class="p">:{</span>
+     <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;https://api.marktplaats.nl/docs/v1/user-profile.html&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;mp:backdrop-image&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/users/1/profile/backdrop-image&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;mp:profile-image&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/users/1/profile/profile-image&quot;</span>
+   <span class="p">}</span>
+ <span class="p">},</span>
+ <span class="nt">&quot;_embedded&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="nt">&quot;mp:backdrop-image&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/users/1/profile/backdrop-image&quot;</span>
+       <span class="p">},</span>
+       <span class="nt">&quot;mp:image-blob&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/images/{size}/blob&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+       <span class="p">},</span>
+       <span class="nt">&quot;mp:image-meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/images/{size}/meta&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+       <span class="p">}</span>
+     <span class="p">},</span>
+     <span class="nt">&quot;imageId&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;available&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;mp:profile-image&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/users/1/profile/profile-image&quot;</span>
+       <span class="p">},</span>
+       <span class="nt">&quot;mp:image-blob&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/images/2/{size}/blob&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+       <span class="p">},</span>
+       <span class="nt">&quot;mp:image-meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/v1/images/2/{size}/meta&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+       <span class="p">}</span>
+     <span class="p">},</span>
+     <span class="nt">&quot;imageId&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+     <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;available&quot;</span>
+   <span class="p">}</span>
+ <span class="p">},</span>
+ <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Super shop&quot;</span><span class="p">,</span>
+ <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Better than all the rest&quot;</span><span class="p">,</span>
+ <span class="nt">&quot;videoUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;some&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For updating the title, description and/or video url of the user profile a <tt class="docutils literal"><span class="pre">PUT</span></tt> request has to be done against the <em>profile</em> endpoint.</p>
+<p>TODO explain video upload process !!!</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/v1/users/1/profile</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Super shop&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Better than all the rest&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;videoUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;some&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/users/1/profile&#39;</span> <span class="se">\</span>
+ -X PUT -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">&#39;{ &quot;title&quot;:&quot;Super shop&quot;,&quot;super description&quot;:&quot;Better than all the rest&quot;,&quot;videoUrl&quot;:&quot;super video url&quot; }&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>For updating the profile image of the user profile a <tt class="docutils literal"><span class="pre">POST</span></tt> request has to be done against the <em>profile-image</em> resource.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/users/1/profile/profile-image</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://remote.host/images/image1.jpg&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/users/1/profile/profile-image&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">&#39;{ &quot;url&quot;:&quot;http://remote.host/images/image1.jpg&quot; }&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>For updating the backdrop image of the user profile a <tt class="docutils literal"><span class="pre">POST</span></tt> request has to be done against the <em>backdrop-image</em> resource.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/users/1/profile/backdrop-image</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://remote.host/images/image1.jpg&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/users/1/profile/backdrop-image&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">&#39;{ &quot;url&quot;:&quot;http://remote.host/images/image1.jpg&quot; }&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="buy-feature-to-display-user-reviews">
+<h2>Buy feature to display user reviews<a class="headerlink" href="#buy-feature-to-display-user-reviews" title="Permalink to this headline">¶</a></h2>
+<p>TODO add image to show the benefit !!!</p>
+<p>In order to allow the fetch of user reviews from external platforms such as tevreden.nl or klantenvertellen.nl
+and their display on Marktplaats on the seller profile page and advertisement pages, the <em>klantscore</em> feature
+has to be bought.</p>
+<p>This is currently only supported for dealers.</p>
+<p>To buy this feature we do a <tt class="docutils literal"><span class="pre">POST</span></tt> request against the <em>features</em> endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/users/1/features/klantscore/buy-feature</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;pay&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the call is successful then an order will be returned and the feature is now active. It might however still take a
+few minutes before the feature is visible on the website.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/users/1/features/klantscore/buy-feature&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">&#39;{ &quot;pay&quot;:true }&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>After the <em>klantscore</em> feature has been bought, you can change the settings needed for configuring
+the external platform from which the user reviews will be fetched and displayed on Marktplaats.</p>
+<p>To get the existing user reviews settings we do a GET request on the <em>userreviews</em> endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/v1/users/1/userreviews</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
+</pre></div>
+</div>
+<p>The response is a JSON object that contains the current user reviews settings.
+The <em>reviewsPlatform</em> field references the external platform used to fetch the user reviews from,
+while the <em>reviewsUser</em> field represents the user id of the dealer on that platform.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+ <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;/v1/users/1/userreviews&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;describedby&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="s2">&quot;https://api.marktplaats.nl/docs/v1/user-reviews.html&quot;</span>
+   <span class="p">},</span>
+ <span class="p">},</span>
+ <span class="nt">&quot;reviewsPlatform&quot;</span><span class="p">:</span> <span class="s2">&quot;tevreden&quot;</span><span class="p">,</span>
+ <span class="nt">&quot;reviewsUser&quot;</span><span class="p">:</span> <span class="s2">&quot;handyHarry&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The user reviews settings can be updated by performing a <tt class="docutils literal"><span class="pre">PUT</span></tt> request against the <em>userreviews</em> endpoint.</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/v1/users/1/userreviews</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;reviewsPlatform&quot;</span><span class="p">:</span> <span class="s2">&quot;tevreden&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;reviewsUser&quot;</span><span class="p">:</span> <span class="s2">&quot;handyHarry&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>CURL</em><div class="highlight-curl"><div class="highlight"><pre>curl <span class="s1">&#39;https://api.marktplaats.nl/v1/users/1/userreviews&#39;</span> <span class="se">\</span>
+ -X PUT -H <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span> <span class="se">\</span>
+ -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+ --data-binary <span class="s1">&#39;{ &quot;reviewsPlatform&quot;:&quot;tevreden&quot;,&quot;reviewsUser&quot;:&quot;handyHarry&quot; }&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 
 
