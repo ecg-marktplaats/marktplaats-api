@@ -421,7 +421,30 @@ will be pretty quick.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$header</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;Content-type: application/json&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;urls&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;http://www.marktplaats.nl/i/common/images/marktplaats-logo.png&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;http://www.marktplaats.nl/i/common/images/mensen.jpg&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;replaceAll&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+<span class="p">);</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s1">&#39;http://api.marktplaats.nl/v1/advertisements/m1000/images&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$header</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -478,7 +501,20 @@ has been successfully downloaded and attached to the advertisement</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$header</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;Content-type: application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s1">&#39;http://api.marktplaats.nl/v1/advertisements/m1000/images&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$header</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -642,7 +678,26 @@ few minutes before all of the features that you have bought are visible on the w
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$header</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;Content-type: application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;pay&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+<span class="p">);</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000/features/topadvertentie/buy-feature&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$header</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -704,7 +759,53 @@ performing a <tt class="docutils literal"><span class="pre">PUT</span></tt> requ
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$header</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;Content-type: application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;itemId&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;m1000&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Test cd player&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is an awesome cd-player&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;categoryId&#39;</span> <span class="o">=&gt;</span> <span class="mi">35</span><span class="p">,</span>
+    <span class="s1">&#39;priceModel&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;modelType&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;fixed&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;askingPrice&#39;</span> <span class="o">=&gt;</span> <span class="mi">3241</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;postcode&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;1097DN&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cityName&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Amsterdam&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;seller&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;sellerId&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;sellerName&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;lalala&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;phoneNumber&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;acceptPaypal&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;showOnMap&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;deactivated&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;startDate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2014-12-23T16:59:39Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;closeDate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2015-01-23T16:59:39Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;condition&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Nieuw&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;brand&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Sony&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;properties&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;Draagbaar&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;delivery&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Ophalen&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$header</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -738,7 +839,28 @@ Content-Type: application/json-patch+json
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$header</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;Content-type: application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;op&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;replace&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/title&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;the new title&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s1">&#39;PATCH&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$header</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -760,7 +882,20 @@ No Request body is required</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// php example goes here</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$header</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;Authorization: Bearer myaccesstoken&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s1">&#39;https://api.marktplaats.nl/v1/advertisements/m1000&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$header</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>

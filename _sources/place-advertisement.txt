@@ -340,7 +340,30 @@ will be pretty quick.
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+      'Content-type: application/json',
+      'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'urls' => array(
+            'http://www.marktplaats.nl/i/common/images/marktplaats-logo.png',
+            'http://www.marktplaats.nl/i/common/images/mensen.jpg'
+        ),
+        'replaceAll' => true
+    );
+
+    $ch = curl_init('http://api.marktplaats.nl/v1/advertisements/m1000/images');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 
 Most of the time. This is all there is to it, and at this point you can continue with
@@ -401,7 +424,20 @@ has been successfully downloaded and attached to the advertisement
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $ch = curl_init('http://api.marktplaats.nl/v1/advertisements/m1000/images');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 
 Step 4: Buying features
@@ -580,7 +616,26 @@ few minutes before all of the features that you have bought are visible on the w
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'pay' => true
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/advertisements/m1000/features/topadvertentie/buy-feature');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 
 
@@ -646,7 +701,53 @@ Lets demonstrate a the former case first.
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'itemId' => 'm1000',
+        'title' => 'Test cd player',
+        'description' => 'This is an awesome cd-player',
+        'categoryId' => 35,
+        'priceModel' => array(
+            'modelType' => 'fixed',
+            'askingPrice' => 3241
+        ),
+        'location' => array(
+            'postcode' => '1097DN',
+            'cityName' => 'Amsterdam'
+        ),
+        'seller' => array(
+            'sellerId' => 1,
+            'sellerName' => 'lalala',
+            'phoneNumber' => '',
+            'acceptPaypal' => false
+        ),
+        'showOnMap' => false,
+        'status' => 'deactivated',
+        'startDate' => '2014-12-23T16:59:39Z',
+        'closeDate' => '2015-01-23T16:59:39Z',
+        'condition' => 'Nieuw',
+        'brand' => 'Sony',
+        'properties' => array(
+            'Draagbaar'
+        ),
+        'delivery' => 'Ophalen'
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/advertisements/m1000');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 In the above example we overwrote all the fields all at once.
 
@@ -683,7 +784,28 @@ Lets quickly take a look at what a request for updating just the title of an adv
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'op' => 'replace',
+        'path' => '/title',
+        'value' => 'the new title'
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/advertisements/m1000');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 
 
@@ -707,7 +829,20 @@ No Request body is required
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/advertisements/m1000');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 
 

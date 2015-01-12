@@ -20,9 +20,6 @@ This guide will show you how to buy these user features.
 In the examples below we will use the *access_token* ``myaccesstoken`` to illustrate that
 in that place the *access_token* should be filled in.
 
-The full PHP example of which snippets are used in this guide can be found in this
-repository in the directory ``/phpexample``.
-
 
 Prerequisites
 -------------
@@ -136,7 +133,26 @@ few minutes before the feature is visible on the website.
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'pay' => true
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/users/1/features/bedrijfsprofilering/buy-feature');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 After the *bedrijfsprofilering* feature has been bought, you can enhance your user profile with additional elements
 such as description, video url, background image and more.
@@ -235,11 +251,32 @@ TODO explain video upload process !!!
     curl 'https://api.marktplaats.nl/v1/users/1/profile' \
      -X PUT -H 'Authorization: Bearer myaccesstoken' \
      -H 'Content-Type: application/json' \
-     --data-binary '{ "title":"Super shop","super description":"Better than all the rest","videoUrl":"super video url" }'
+     --data-binary '{ "title":"Super shop","description":"Better than all the rest","videoUrl":"super video url" }'
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'title' => 'Super shop',
+        'description' => 'Better than all the rest',
+        'videoUrl' => "super video url"
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/users/1/profile');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 For updating the profile image of the user profile a ``POST`` request has to be done against the *profile-image* resource.
 
@@ -264,7 +301,26 @@ For updating the profile image of the user profile a ``POST`` request has to be 
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'url' => 'http://remote.host/images/image1.jpg'
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/users/1/profile/profile-image');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 For updating the backdrop image of the user profile a ``POST`` request has to be done against the *backdrop-image* resource.
 
@@ -289,7 +345,26 @@ For updating the backdrop image of the user profile a ``POST`` request has to be
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'url' => 'http://remote.host/images/image1.jpg'
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/users/1/profile/backdrop-image');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 Buy feature to display user reviews
 -----------------------------------
@@ -328,7 +403,26 @@ few minutes before the feature is visible on the website.
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'pay' => true
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/users/1/features/klantscore/buy-feature');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
 
 
 After the *klantscore* feature has been bought, you can change the settings needed for configuring
@@ -388,4 +482,24 @@ The user reviews settings can be updated by performing a ``PUT`` request against
 
   .. code-block:: php
 
-    // php example goes here
+    <?php
+
+    $header = array(
+        'Content-type: application/json',
+        'Authorization: Bearer myaccesstoken'
+    );
+
+    $data = array(
+        'reviewsPlatform' => 'tevreden',
+        'reviewsUser' => 'handyHarry'
+    );
+
+    $ch = curl_init('https://api.marktplaats.nl/v1/users/1/userreviews');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    var_dump( curl_exec($ch) );
+
+    curl_close($ch);
