@@ -139,19 +139,33 @@ The <em>redirect_uri</em> we use is <tt class="docutils literal"><span class="pr
 <h2>Step 1: obtaining authorization code<a class="headerlink" href="#step-1-obtaining-authorization-code" title="Permalink to this headline">¶</a></h2>
 <p>In order to get the <em>access_token</em>, the first step is to do a call to the Marktplaats
 Authorization server:</p>
-<div class="highlight-python"><div class="highlight"><pre>.. code-block:: http
+<div class="highlight-HTTP"><div class="highlight"><pre><span class="err">GET /accounts/oauth/authorize?response_type=code&amp;client_id=myclientid&amp;state=randomstate&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php</span>
+<span class="err">Host: auth.marktplaats.nl</span>
 </pre></div>
 </div>
-<blockquote>
-<div>GET /accounts/oauth/authorize?response_type=code&amp;client_id=myclientid&amp;state=randomstate&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php
-Host: auth.marktplaats.nl</div></blockquote>
 <p>In the PHP example we POST a HTML form to the <tt class="docutils literal"><span class="pre">authenticate.php</span></tt> with <tt class="docutils literal"><span class="pre">clientId</span></tt>,
 <tt class="docutils literal"><span class="pre">clientSecret</span></tt>, <tt class="docutils literal"><span class="pre">authorizationUrl</span></tt>, <tt class="docutils literal"><span class="pre">accessTokenUrl</span></tt> and <tt class="docutils literal"><span class="pre">redirectUri</span></tt> as
 parameters. <tt class="docutils literal"><span class="pre">authorizationUrl</span></tt> is the URL which is used to retrieve the <em>authorization_code</em>
 while <tt class="docutils literal"><span class="pre">accessTokenUrl</span></tt> is the URL which is used to retrieve the <em>access_token</em>. These URL
 for our production site are respectively <tt class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/authorize</span></tt>
 and <tt class="docutils literal"><span class="pre">https://auth.marktplaats.nl/accounts/oauth/token</span></tt></p>
-<div class="highlight-PHP"><div class="highlight"><pre><span class="o">..</span> <span class="nx">literalinclude</span><span class="o">::</span> <span class="o">../</span><span class="nx">phpexample</span><span class="o">/</span><span class="nx">authenticate</span><span class="o">.</span><span class="nx">php</span>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?php
+session_start();
+$clientId = $_POST[&#39;clientId&#39;];
+$clientSecret = $_POST[&#39;clientSecret&#39;];
+$authorizationUrl = $_POST[&#39;authorizationUrl&#39;];
+$accessTokenUrl = $_POST[&#39;accessTokenUrl&#39;];
+$redirectUri = urlencode($_POST[&#39;redirectUri&#39;]);
+
+$url = $authorizationUrl . &quot;?response_type=code&amp;client_id=$clientId&amp;state=randomstate&amp;redirect_uri=$redirectUri&quot;;
+
+$_SESSION[&#39;clientId&#39;] = $clientId;
+$_SESSION[&#39;clientSecret&#39;] = $clientSecret;
+$_SESSION[&#39;accessTokenUrl&#39;] = $accessTokenUrl;
+$_SESSION[&#39;redirectUri&#39;] = $redirectUri;
+
+//echo $url;
+header(&quot;Location: $url&quot;);
 </pre></div>
 </div>
 <p>After performing this step, the user will see a login page (in case he is not yet

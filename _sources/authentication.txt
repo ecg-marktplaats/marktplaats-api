@@ -26,9 +26,9 @@ Step 1: obtaining authorization code
 ------------------------------------
 
 In order to get the *access_token*, the first step is to do a call to the Marktplaats
-Authorization server::
+Authorization server:
 
-.. code-block:: http
+.. code-block:: HTTP
 
   GET /accounts/oauth/authorize?response_type=code&client_id=myclientid&state=randomstate&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php
   Host: auth.marktplaats.nl
@@ -40,9 +40,8 @@ while ``accessTokenUrl`` is the URL which is used to retrieve the *access_token*
 for our production site are respectively ``https://auth.marktplaats.nl/accounts/oauth/authorize``
 and ``https://auth.marktplaats.nl/accounts/oauth/token``
 
-.. code-block:: PHP
 
-  .. literalinclude:: ../phpexample/authenticate.php
+.. literalinclude:: phpexample/authenticate.php
 
 After performing this step, the user will see a login page (in case he is not yet
 logged in on the Marktplaats.nl website) and a confirmation page to grand access to
