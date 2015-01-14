@@ -102,7 +102,7 @@ the *active* field is set to true.
 Buy feature to enhance the user profile
 ---------------------------------------
 
-TODO add image to show the benefit !!!
+.. TODO add image to show the benefit !!!
 
 In order to enhance your seller profile page with description, video url, background image and other such elements,
 not available for regular users, the *bedrijfsprofilering* feature has to be purchased.
@@ -230,7 +230,7 @@ The response is a JSON object that contains the user profile data.
 
 For updating the title, description and/or video url of the user profile a ``PUT`` request has to be done against the *profile* endpoint.
 
-TODO explain video upload process !!!
+.. TODO explain video upload process !!!
 
 .. code-block:: http
 
@@ -369,7 +369,7 @@ For updating the backdrop image of the user profile a ``POST`` request has to be
 Buy feature to display user reviews
 -----------------------------------
 
-TODO add image to show the benefit !!!
+.. TODO add image to show the benefit !!!
 
 In order to allow the fetch of user reviews from external platforms such as tevreden.nl or klantenvertellen.nl
 and their display on Marktplaats on the seller profile page and advertisement pages, the *klantscore* feature
