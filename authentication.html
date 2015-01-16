@@ -139,8 +139,8 @@ The <em>redirect_uri</em> we use is <tt class="docutils literal"><span class="pr
 <h2>Step 1: obtaining authorization code<a class="headerlink" href="#step-1-obtaining-authorization-code" title="Permalink to this headline">¶</a></h2>
 <p>In order to get the <em>access_token</em>, the first step is to do a call to the Marktplaats
 Authorization server:</p>
-<div class="highlight-HTTP"><div class="highlight"><pre><span class="err">GET /accounts/oauth/authorize?response_type=code&amp;client_id=myclientid&amp;state=randomstate&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php</span>
-<span class="err">Host: auth.marktplaats.nl</span>
+<div class="highlight-HTTP"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/accounts/oauth/authorize?response_type=code&amp;client_id=myclientid&amp;state=randomstate&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">auth.marktplaats.nl</span>
 </pre></div>
 </div>
 <p>In the PHP example we POST a HTML form to the <tt class="docutils literal"><span class="pre">authenticate.php</span></tt> with <tt class="docutils literal"><span class="pre">clientId</span></tt>,
@@ -228,8 +228,8 @@ which we stored in the session (which is the <em>client_id</em>, <em>client_secr
 <em>access_token</em>. For this, we construct the parameters for the request and do a
 POST request to the <em>access token url</em>.</p>
 <p>The POST request sent to the server looks like this:</p>
-<div class="highlight-HTTP"><div class="highlight"><pre><span class="err">POST /accounts/oauth/token?grant_type=authorization_code&amp;code=akAS72shjuqeah382&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret</span>
-<span class="err">Host: auth.marktplaats.nl</span>
+<div class="highlight-HTTP"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/accounts/oauth/token?grant_type=authorization_code&amp;code=akAS72shjuqeah382&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">auth.marktplaats.nl</span>
 </pre></div>
 </div>
 <p>The result of this POST request should be
@@ -281,8 +281,8 @@ This is very similar to obtaining the access token:</p>
 </pre></div>
 </div>
 <p>The http request which is done looks like this:</p>
-<div class="highlight-HTTP"><div class="highlight"><pre><span class="err">POST /accounts/oauth/token?grant_type=refresh_token&amp;refresh_token=35f5fb15-9364-464a-854b-9ac0b344f108&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret</span>
-<span class="err">Host: auth.marktplaats.nl</span>
+<div class="highlight-HTTP"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/accounts/oauth/token?grant_type=refresh_token&amp;refresh_token=35f5fb15-9364-464a-854b-9ac0b344f108&amp;redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&amp;cliend_id=myclientid&amp;client_secret=myclientsecret</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">auth.marktplaats.nl</span>
 </pre></div>
 </div>
 <p>The returned JSON object has the same structure as the one returned when requesting

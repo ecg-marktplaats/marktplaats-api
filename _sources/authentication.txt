@@ -30,7 +30,7 @@ Authorization server:
 
 .. code-block:: HTTP
 
-  GET /accounts/oauth/authorize?response_type=code&client_id=myclientid&state=randomstate&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php
+  GET /accounts/oauth/authorize?response_type=code&client_id=myclientid&state=randomstate&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php HTTP/1.1
   Host: auth.marktplaats.nl
 
 In the PHP example we POST a HTML form to the ``authenticate.php`` with ``clientId``,
@@ -112,7 +112,7 @@ The POST request sent to the server looks like this:
 
 .. code-block:: HTTP
 
-  POST /accounts/oauth/token?grant_type=authorization_code&code=akAS72shjuqeah382&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&cliend_id=myclientid&client_secret=myclientsecret
+  POST /accounts/oauth/token?grant_type=authorization_code&code=akAS72shjuqeah382&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&cliend_id=myclientid&client_secret=myclientsecret HTTP/1.1
   Host: auth.marktplaats.nl
 
 The result of this POST request should be
@@ -173,7 +173,7 @@ The http request which is done looks like this:
 
 .. code-block:: HTTP
 
-  POST /accounts/oauth/token?grant_type=refresh_token&refresh_token=35f5fb15-9364-464a-854b-9ac0b344f108&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&cliend_id=myclientid&client_secret=myclientsecret
+  POST /accounts/oauth/token?grant_type=refresh_token&refresh_token=35f5fb15-9364-464a-854b-9ac0b344f108&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fprocessredirect.php&cliend_id=myclientid&client_secret=myclientsecret HTTP/1.1
   Host: auth.marktplaats.nl
 
 The returned JSON object has the same structure as the one returned when requesting
