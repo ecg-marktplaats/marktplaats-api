@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Place Advertisement &mdash; Marktplaats API Userguide 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,12 +30,14 @@
   
     <link rel="stylesheet" href="_static/configurationblock.css" type="text/css" />
   
+
+  
     <link rel="top" title="Marktplaats API Userguide 1.0 documentation" href="index.html"/>
         <link rel="next" title="Buy User Features" href="buying-user-features.html"/>
         <link rel="prev" title="Authentication" href="authentication.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -46,20 +48,32 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> Marktplaats API Userguide</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> Marktplaats API Userguide
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+
+        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
         
-        
-            <ul class="current">
+          
+          
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="authentication.html#prerequisites">Prerequisites</a></li>
@@ -87,6 +101,7 @@
 </li>
 </ul>
 
+          
         
       </div>
       &nbsp;
@@ -111,13 +126,15 @@
     <li>Place Advertisement</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/place-advertisement.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/place-advertisement.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document">
             
   <div class="section" id="place-advertisement">
 <span id="index-0"></span><span id="id1"></span><h1>Place Advertisement<a class="headerlink" href="#place-advertisement" title="Permalink to this headline">¶</a></h1>
@@ -125,14 +142,14 @@
 in free categories, unless you have a contract with Marktplaats, in which case
 advertisements are payed using an invoice. This example will show how to place an
 advertisement in a free category including images.</p>
-<p>In this example we use the <em>access_token</em> <tt class="docutils literal"><span class="pre">myaccesstoken</span></tt> to illustrate that
+<p>In this example we use the <em>access_token</em> <code class="docutils literal"><span class="pre">myaccesstoken</span></code> to illustrate that
 in that place the <em>access_token</em> should be filled in.</p>
 <p>The full PHP example of which snippets are used in this guide can be found in this
-repository in the directory <tt class="docutils literal"><span class="pre">/phpexample</span></tt>.</p>
+repository in the directory <code class="docutils literal"><span class="pre">/phpexample</span></code>.</p>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>You need to have an <em>access_token</em> which can be used to authenticate the request
-to the API. See <a class="reference internal" href="authentication.html#authentication"><em>Authentication</em></a> on how to get such a token.</p>
+to the API. See <a class="reference internal" href="authentication.html#authentication"><span>Authentication</span></a> on how to get such a token.</p>
 </div>
 <div class="section" id="step-1-get-the-attributes-for-an-category">
 <h2>Step 1: Get the attributes for an category<a class="headerlink" href="#step-1-get-the-attributes-for-an-category" title="Permalink to this headline">¶</a></h2>
@@ -214,7 +231,7 @@ the condition attribute is mandatory.</p>
 <p>After we have determined which category we want to place the advertisement in,
 we can get the attributes for that category and use those to create the advertisement.
 For example, if we want to place an advertisement in the cd player category, we can
-get the attributes for that category by doing a GET request to <tt class="docutils literal"><span class="pre">/v1/categories/31/35/attributes</span></tt></p>
+get the attributes for that category by doing a GET request to <code class="docutils literal"><span class="pre">/v1/categories/31/35/attributes</span></code></p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/v1/categories/31/35/attributes</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
@@ -269,12 +286,12 @@ the JSON for a minimal advertisement should look something like this:</p>
 </pre></div>
 </div>
 <p>There are a couple of fields which are required, regardless of the category the
-advertisement is placed in: <tt class="docutils literal"><span class="pre">categoryId</span></tt>, <tt class="docutils literal"><span class="pre">title</span></tt>, <tt class="docutils literal"><span class="pre">description</span></tt>, <tt class="docutils literal"><span class="pre">priceModel</span></tt>
-and <tt class="docutils literal"><span class="pre">location</span></tt>. All the other fields are optional: <tt class="docutils literal"><span class="pre">condition</span></tt>, <tt class="docutils literal"><span class="pre">brand</span></tt>,
-<tt class="docutils literal"><span class="pre">properties</span></tt> and <tt class="docutils literal"><span class="pre">delivery</span></tt> are attributes of the category with id 35. Note
-that the <tt class="docutils literal"><span class="pre">properties</span></tt> attribute is of the type <tt class="docutils literal"><span class="pre">LIST</span></tt>, and can also contain
+advertisement is placed in: <code class="docutils literal"><span class="pre">categoryId</span></code>, <code class="docutils literal"><span class="pre">title</span></code>, <code class="docutils literal"><span class="pre">description</span></code>, <code class="docutils literal"><span class="pre">priceModel</span></code>
+and <code class="docutils literal"><span class="pre">location</span></code>. All the other fields are optional: <code class="docutils literal"><span class="pre">condition</span></code>, <code class="docutils literal"><span class="pre">brand</span></code>,
+<code class="docutils literal"><span class="pre">properties</span></code> and <code class="docutils literal"><span class="pre">delivery</span></code> are attributes of the category with id 35. Note
+that the <code class="docutils literal"><span class="pre">properties</span></code> attribute is of the type <code class="docutils literal"><span class="pre">LIST</span></code>, and can also contain
 a array of values instead of a single value.</p>
-<p>The JSON should be send to the Marktplaats API using a <tt class="docutils literal"><span class="pre">POST</span></tt> request:</p>
+<p>The JSON should be send to the Marktplaats API using a <code class="docutils literal"><span class="pre">POST</span></code> request:</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/advertisements</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
@@ -331,11 +348,11 @@ the names of the API, it would look something like this:</p>
 <span class="nv">$jsonresult</span> <span class="o">=</span> <span class="nx">apiCall</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$adJson</span><span class="p">,</span> <span class="nv">$accessToken</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Most code is needed to correct the type of numeric fields (like <tt class="docutils literal"><span class="pre">categoryId</span></tt>).
+<p>Most code is needed to correct the type of numeric fields (like <code class="docutils literal"><span class="pre">categoryId</span></code>).
 Note that the snippet above lacks any form of error handling. In any production
 usage of the API, errors should be handled. The API returns a common error document
 which contains both machine readable as well as human readable error messages.
-When the language is set correctly in the request, using the <tt class="docutils literal"><span class="pre">accept-language</span></tt>
+When the language is set correctly in the request, using the <code class="docutils literal"><span class="pre">accept-language</span></code>
 header, the messages are returned in the correct language. At the moment the only
 supported languages are Dutch and English.</p>
 </div>
@@ -343,7 +360,7 @@ supported languages are Dutch and English.</p>
 <h2>Step 3: Adding images<a class="headerlink" href="#step-3-adding-images" title="Permalink to this headline">¶</a></h2>
 <p>After successfully having created an advertisement, the first thing you will usually
 want to do, is attach images to your advertisement.</p>
-<p>To do this you do a <tt class="docutils literal"><span class="pre">POST</span></tt> request to the images endpoint.</p>
+<p>To do this you do a <code class="docutils literal"><span class="pre">POST</span></code> request to the images endpoint.</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/advertisements/m1000/images</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer myaccesstoken</span>
@@ -453,7 +470,7 @@ will be pretty quick.</p>
 <p>Most of the time. This is all there is to it, and at this point you can continue with
 posting other ads or buying features.</p>
 <p>But if you want to make absolutely sure that images have finished downloading before
-continuing then you can poll the individual image resources by doing a <tt class="docutils literal"><span class="pre">GET</span></tt> request to
+continuing then you can poll the individual image resources by doing a <code class="docutils literal"><span class="pre">GET</span></code> request to
 the image endpoint.</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/v1/images/8</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
@@ -492,7 +509,7 @@ the image endpoint.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>When the status field changes from <tt class="docutils literal"><span class="pre">downloading</span></tt> to <tt class="docutils literal"><span class="pre">available</span></tt> then the image
+<p>When the status field changes from <code class="docutils literal"><span class="pre">downloading</span></code> to <code class="docutils literal"><span class="pre">available</span></code> then the image
 has been successfully downloaded and attached to the advertisement</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -650,13 +667,13 @@ GET request on the features endpoint</p>
 </div>
 <p>If the available field of an embedded feature is set to true, this feature is available
 for purchase. If we look at the example output above you can see that the
-<tt class="docutils literal"><span class="pre">topadvertentie</span></tt> feature is available but the <tt class="docutils literal"><span class="pre">url</span></tt> feature is not. In this case the
-<tt class="docutils literal"><span class="pre">url</span></tt> feature is unavailable because it has already been bought. We know this because
+<code class="docutils literal"><span class="pre">topadvertentie</span></code> feature is available but the <code class="docutils literal"><span class="pre">url</span></code> feature is not. In this case the
+<code class="docutils literal"><span class="pre">url</span></code> feature is unavailable because it has already been bought. We know this because
 the active field is set to true.</p>
 <p>It is worth noting that the prices (in cents) are the prices that users of the
 marktplaats website would pay. In many cases other arrangements have been made with api
 partners and these arrangements are <em>not</em> reflected in the price</p>
-<p>Let&#8217;s continue and buy the <tt class="docutils literal"><span class="pre">topadvertentie</span></tt>. To do this we we do a <tt class="docutils literal"><span class="pre">POST</span></tt> request
+<p>Let&#8217;s continue and buy the <code class="docutils literal"><span class="pre">topadvertentie</span></code>. To do this we we do a <code class="docutils literal"><span class="pre">POST</span></code> request
 to the features endpoint</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/v1/advertisements/m1000/features/topadvertentie/buy-feature</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
@@ -712,7 +729,7 @@ updatable, even when these same properties where editable on creation. So be sur
 and at the category attributes (see step 1 of this guide) before attempting to update a property.
 Only attributes that are marked as updateable can be changed.</p>
 <p>An advertisement can be updated in two different ways. You can do a full update, by
-performing a <tt class="docutils literal"><span class="pre">PUT</span></tt> request, or a partial update, by doing a <tt class="docutils literal"><span class="pre">PATCH</span></tt> request against the advertisement endpoint</p>
+performing a <code class="docutils literal"><span class="pre">PUT</span></code> request, or a partial update, by doing a <code class="docutils literal"><span class="pre">PATCH</span></code> request against the advertisement endpoint</p>
 <p>Lets demonstrate a the former case first.</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/v1/advertisements/m1000</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
@@ -813,21 +830,21 @@ performing a <tt class="docutils literal"><span class="pre">PUT</span></tt> requ
 </div>
 <p>In the above example we overwrote all the fields all at once.</p>
 <p>In some cases you may only want to update only one or two fields, leaving the rest unchanged. In that case you could
-perform a <tt class="docutils literal"><span class="pre">PATCH</span></tt> request instead.
-The body of this <tt class="docutils literal"><span class="pre">PATCH</span></tt> request should be a JSON Patch document. JSON Patch is a standard format for describing
+perform a <code class="docutils literal"><span class="pre">PATCH</span></code> request instead.
+The body of this <code class="docutils literal"><span class="pre">PATCH</span></code> request should be a JSON Patch document. JSON Patch is a standard format for describing
 changes to a JSON document. A JSON Patch document is just a JSON file containing an array of patch operations.
 The patch operations supported by JSONPatch are “add”, “remove”, “replace”, “move”, “copy” and “test”.
 The operations are applied in order; if any of them fail then the whole patch operation should abort.</p>
 <p>Covering this standard in detail is outside of the scope of this document but there is
 <a class="reference external" href="https://tools.ietf.org/html/rfc6902/">extensive documentation</a> on this format available online.</p>
 <p>Lets quickly take a look at what a request for updating just the title of an advertisement could look like.</p>
-<div class="highlight-http"><div class="highlight"><pre>PATCH /v1/advertisements/m1000 HTTP/1.1
-Host: api.marktplaats.nl
-Content-Type: application/json-patch+json
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PATCH</span> <span class="nn">/v1/advertisements/m1000</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json-patch+json</span>
 
-[
-  {&quot;op&quot;:&quot;replace&quot;, &quot;path&quot;:&quot;/title&quot;, &quot;value&quot;:&quot;the new title&quot;}
-]
+<span class="p">[</span>
+  <span class="p">{</span><span class="nt">&quot;op&quot;</span><span class="p">:</span><span class="s2">&quot;replace&quot;</span><span class="p">,</span> <span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="s2">&quot;/title&quot;</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;the new title&quot;</span><span class="p">}</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 <div class="configuration-block">
@@ -869,7 +886,7 @@ Content-Type: application/json-patch+json
 </div>
 <div class="section" id="step-6-removing-an-advertisement">
 <h2>Step 6: Removing an advertisement<a class="headerlink" href="#step-6-removing-an-advertisement" title="Permalink to this headline">¶</a></h2>
-<p>Removing an advertisement is straightforward. You simply do a <tt class="docutils literal"><span class="pre">DELETE</span></tt> request against the advertisement endpoint.
+<p>Removing an advertisement is straightforward. You simply do a <code class="docutils literal"><span class="pre">DELETE</span></code> request against the advertisement endpoint.
 No Request body is required</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/v1/advertisements/m1000</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">api.marktplaats.nl</span>
@@ -913,10 +930,10 @@ In the next section we will describe how</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="buying-user-features.html" class="btn btn-neutral float-right" title="Buy User Features"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="buying-user-features.html" class="btn btn-neutral float-right" title="Buy User Features" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="authentication.html" class="btn btn-neutral" title="Authentication"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="authentication.html" class="btn btn-neutral" title="Authentication" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -928,9 +945,10 @@ In the next section we will describe how</p>
         &copy; Copyright 2014, Marktplaats bv.
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
